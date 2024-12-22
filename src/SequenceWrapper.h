@@ -1,7 +1,3 @@
-//
-// Created by andru_kfgnofp on 12/22/2024.
-//
-
 #pragma once
 #include <algorithm>
 #include <stdexcept>
@@ -14,7 +10,6 @@ class SequenceWrapper {
 protected:
     Sequence sequence;
     Directionality directionality;
-
 
 public:
     virtual std::string getAllowedSymbols() {

@@ -1,7 +1,3 @@
-//
-// Created by andru_kfgnofp on 12/14/2024.
-//
-
 #pragma once
 
 #include <algorithm>
@@ -15,20 +11,12 @@
 class RNA;
 
 class DNA : public SequenceWrapper {
-    //Directionality directionality{Directionality::DIR_3_to_5};
-
     ReplicationStatus replicationStatus{ReplicationStatus::LEADING};
 
     TranscriptionStatus transcriptionStatus{TranscriptionStatus::TEMPLATE};
 
-    //Sequence sequence;
-
 public:
     std::string getAllowedSymbols() override { return CORRECT_DNA_BASES; }
-
-    //static bool checkSequenceCorrectness(const std::string &seq);
-
-    //static bool checkSymbolCorrectness(char c);
 
 
     explicit DNA(const std::string &seq,
@@ -46,23 +34,13 @@ public:
 
     ~DNA() override;
 
-    //[[nodiscard]] Directionality getDirectionality() const { return directionality; }
-
     [[nodiscard]] ReplicationStatus getReplicationStatus() const { return replicationStatus; }
 
     [[nodiscard]] TranscriptionStatus getTranscriptionStatus() const { return transcriptionStatus; }
 
-    //[[nodiscard]] std::string getSequence() const { return sequence.getSequence(); }
-
-    //void setDirectionality(const Directionality dir) { directionality = dir; }
-
     void setReplicationStatus(const ReplicationStatus repl) { replicationStatus = repl; }
 
     void setTranscriptionStatus(const TranscriptionStatus trans) { transcriptionStatus = trans; }
-
-    //void reverseDirectionality();
-
-    //void reverse();
 
     void complement();
 

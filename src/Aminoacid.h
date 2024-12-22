@@ -1,6 +1,3 @@
-//
-// Created by andru_kfgnofp on 12/22/2024.
-//
 #pragma once
 #include <string>
 #include "constants.h"

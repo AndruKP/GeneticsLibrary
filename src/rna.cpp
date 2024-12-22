@@ -1,7 +1,3 @@
-//
-// Created by andru_kfgnofp on 12/22/2024.
-//
-
 #include "rna.h"
 
 RNA::RNA(const std::string &seq, const Directionality dir): SequenceWrapper(seq, dir) {

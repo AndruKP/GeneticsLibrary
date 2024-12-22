@@ -1,7 +1,3 @@
-//
-// Created by andru_kfgnofp on 12/22/2024.
-//
-
 #include "SequenceWrapper.h"
 
 bool SequenceWrapper::checkSequenceCorrectness(const std::string &seq) {

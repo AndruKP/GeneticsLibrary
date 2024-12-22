@@ -11,21 +11,7 @@
 
 using namespace ::testing;
 
-// TEST(TestDNA, TestCheckCorrectness) {
-//     ASSERT_TRUE(DNA::checkSymbolCorrectness('A'));
-//     ASSERT_TRUE(DNA::checkSymbolCorrectness('C'));
-//     ASSERT_TRUE(DNA::checkSymbolCorrectness('G'));
-//     ASSERT_TRUE(DNA::checkSymbolCorrectness('T'));
-//
-//     ASSERT_FALSE(DNA::checkSymbolCorrectness('x'));
-//     ASSERT_FALSE(DNA::checkSymbolCorrectness('-'));
-//
-//     ASSERT_TRUE(DNA::checkSequenceCorrectness("ACGT"));
-//     ASSERT_TRUE(DNA::checkSequenceCorrectness("AAAAA"));
-//     ASSERT_TRUE(DNA::checkSequenceCorrectness("GTGT"));
-//
-//     ASSERT_FALSE(DNA::checkSequenceCorrectness("AT&T"));
-// }
+//todo rewrite tests to SequenceWrapper, not only DNA
 
 TEST(TestDNA, TestTrueConstructors) {
     std::string s1 = "ACGT";

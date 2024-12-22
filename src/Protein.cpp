@@ -1,7 +1,3 @@
-//
-// Created by andru_kfgnofp on 12/22/2024.
-//
-
 #include "Protein.h"
 
 Protein::Protein() = default;
