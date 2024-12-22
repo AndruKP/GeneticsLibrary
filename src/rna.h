@@ -5,24 +5,19 @@
 
 #include <utility>
 
-#include "sequence.h"
-#include "dna.h"
 #include "constants.h"
+#include "dna.h"
+#include "Protein.h"
+#include "sequence.h"
+#include "SequenceWrapper.h"
 
+class DNA;
 
-class RNA {
+class RNA : SequenceWrapper {
 public:
-    explicit RNA(Sequence sequence, Directionality directionality = Directionality::DIR_3_to_5);
+    explicit RNA(const std::string &seq, Directionality dir = Directionality::DIR_3_to_5);
 
-private:
-    Sequence sequence;
-    Directionality directionality{Directionality::DIR_3_to_5};
+    DNA reverseTranscribe();
 
-public:
-    Sequence getSequence() { return sequence; }
-
-    [[nodiscard]] Directionality getDirectionality() const { return directionality; }
+    Protein translate();
 };
-
-
-

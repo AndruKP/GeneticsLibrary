@@ -15,6 +15,10 @@ set(SOURCE_FILES
         src/constants.h
         src/SequenceWrapper.cpp
         src/SequenceWrapper.h
+        src/Protein.cpp
+        src/Protein.h
+        src/Aminoacid.cpp
+        src/Aminoacid.h
 )
 
 set(TEST_FILES
