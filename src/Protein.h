@@ -12,6 +12,12 @@ public:
     Protein();
 
     explicit Protein(std::vector<Aminoacid> chain);
+
+    Aminoacid operator[](int index);
+
+    void addAminoacid(const Aminoacid &aminoacid);
+
+    void addAminoacid(const std::string &codon);
 };
 
 

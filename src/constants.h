@@ -24,7 +24,7 @@ const std::map<char, char> DNA_COMPLEMENTS{
 const std::string DNA_WRONG_SYMBOL_MESSAGE = "DNA::checkCorrectness() failed: there is a bad symbol in sequence";
 const std::string SEQUENCE_WRAPPER_WRONG_SYMBOL_MESSAGE(
     "::checkCorrectness() failed: there is a bad symbol in sequence");
-
+const std::string PROTEIN_RANGE_EXCEPTION_MESSAGE = "Index is out of range in Protein::operator[]";
 
 ///adenine (A), cytosine (C), guanine (G), uracil (U)
 const std::string CORRECT_RNA_BASES{'A', 'C', 'G', 'U'};
@@ -51,9 +51,32 @@ const std::map<char, char> REVERSE_TRANSCRIPTION_TABLE{
     {'G', 'C'}
 };
 
+
+/// Note: there is used only classic start codon "AUG"
 const std::map<std::string, std::string> TRANSLATION_TABLE{
-    {"AUG", "Met"}
-    // todo finish
+    {"UUU", "Phe"}, {"UUC", "Phe"}, // Phenylalanine
+    {"UUA", "Leu"}, {"UUG", "Leu"}, {"CUU", "Leu"}, {"CUC", "Leu"}, {"CUA", "Leu"}, {"CUG", "Leu"}, // Leucine
+    {"AUU", "Ile"}, {"AUC", "Ile"}, {"AUA", "Ile"}, // Isoleucine
+    {"AUG", "Met"}, // Methionine (Classic start codon)
+    {"GUU", "Val"}, {"GUC", "Val"}, {"GUA", "Val"}, {"GUG", "Val"}, // Valine (GUG is non-classic start codon)
+    {"UCU", "Ser"}, {"UCC", "Ser"}, {"UCA", "Ser"}, {"UCG", "Ser"}, // Serine
+    {"CCU", "Pro"}, {"CCC", "Pro"}, {"CCA", "Pro"}, {"CCG", "Pro"}, // Proline
+    {"ACU", "Thr"}, {"ACC", "Thr"}, {"ACA", "Thr"}, {"ACG", "Thr"}, // Threonine
+    {"GCU", "Ala"}, {"GCC", "Ala"}, {"GCA", "Ala"}, {"GCG", "Ala"}, // Alanine
+    {"UAU", "Tyr"}, {"UAC", "Tyr"}, // Tyrosine
+    {"UAA", "Stop"}, // Stop codon (Ochre)
+    {"UAG", "Stop"}, // Stop codon (Amber)
+    {"CAU", "His"}, {"CAC", "His"}, // Histidine
+    {"CAA", "Gln"}, {"CAG", "Gln"}, // Glutamine
+    {"AAU", "Asn"}, {"AAC", "Asn"}, // Asparagine
+    {"AAA", "Lys"}, {"AAG", "Lys"}, // Lysine
+    {"GAU", "Asp"}, {"GAC", "Asp"}, // Aspartic Acid
+    {"GAA", "Glu"}, {"GAG", "Glu"}, // Glutamic Acid
+    {"UGU", "Cys"}, {"UGC", "Cys"}, // Cysteine
+    {"UGA", "Stop"}, // Stop codon (Opal)
+    {"UGG", "Trp"}, // Tryptophan
+    {"CGU", "Arg"}, {"CGC", "Arg"}, {"CGA", "Arg"}, {"CGG", "Arg"}, // Arginine
+    {"AGU", "Ser"}, {"AGC", "Ser"}, // Serine
+    {"AGA", "Arg"}, {"AGG", "Arg"}, // Arginine
+    {"GGU", "Gly"}, {"GGC", "Gly"}, {"GGA", "Gly"}, {"GGG", "Gly"} // Glycine
 };
-
-
