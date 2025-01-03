@@ -49,7 +49,7 @@ SequenceWrapper<Validator>::~SequenceWrapper() = default;
 template<typename Validator>
 SequenceWrapper<Validator>::SequenceWrapper(const std::string &seq,
                                             const Directionality dir): sequence(validate(seq)),
-directionality(dir) {
+                                                                       directionality(dir) {
 }
 
 template<typename Validator>
@@ -100,5 +100,3 @@ void SequenceWrapper<Validator>::reverse() {
     sequence.reverse();
     reverseDirectionality();
 }
-
-

@@ -9,7 +9,7 @@ Sequence::Sequence(std::string sequence): sequence(std::move(sequence)) {
 Sequence::Sequence(): Sequence("") {
 }
 
-void Sequence::setSequence(std::string newSeq) { sequence = std::move(newSeq); }
+[[maybe_unused]] void Sequence::setSequence(std::string newSeq) { sequence = std::move(newSeq); }
 
 Sequence::Sequence(const Sequence &other) = default;
 
@@ -38,10 +38,20 @@ void Sequence::reverse() {
 
 void Sequence::replaceChars(const std::map<char, char> &charsMap) {
     char repl;
-    std::ranges::replace_if(sequence, [&](char c) {
+    std::ranges::replace_if(sequence, [&](const char c) {
         return charsMap.contains(c)
                && ((repl = charsMap.at(c)));
     }, repl);
+}
+
+Sequence Sequence::translate(const std::map<char, char> &charsMap) {
+    std::string temp;
+    std::ranges::transform(sequence,
+                           std::back_inserter(temp),
+                           [&charsMap](const char c) {
+                               return charsMap.contains(c) ? charsMap.at(c) : c;
+                           });
+    return Sequence(temp);
 }
 
 

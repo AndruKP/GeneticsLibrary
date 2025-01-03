@@ -21,6 +21,7 @@ set(SOURCE_FILES
         src/Aminoacid.h
         src/Validators.cpp
         src/Validators.h
+        src/ErrorsConstants.h
 )
 
 set(TEST_FILES

@@ -28,4 +28,6 @@ public:
     void reverse();
 
     void replaceChars(const std::map<char, char> &charsMap);
+
+    Sequence translate(const std::map<char, char> &charsMap);
 };

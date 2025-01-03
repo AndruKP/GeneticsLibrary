@@ -10,7 +10,7 @@
 
 class DNA;
 
-class RNA : SequenceWrapper<RNA_VALIDATOR> {
+class RNA : SequenceWrapper<RNA_VALIDATOR > {
 public:
     explicit RNA(const std::string &seq, Directionality dir = Directionality::DIR_3_to_5);
 

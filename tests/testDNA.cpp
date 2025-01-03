@@ -51,7 +51,7 @@ TEST(TestDNA, TestFalseConstructors) {
     } catch (std::invalid_argument &ex) {
         exceptionMessage2 = ex.what();
     }
-    ASSERT_EQ(exceptionMessage2, SEQUENCE_WRAPPER_WRONG_SYMBOL_MESSAGE);
+    ASSERT_EQ(exceptionMessage2, SIMPLE_VALIDATOR_WRONG_SEQUENCE_MESSAGE + " \"ACGT\"");
 }
 
 TEST(TestDNA, TestCopyConstructors) {
