@@ -44,7 +44,7 @@ TEST(TestDNA, TestFalseConstructors) {
     } catch (std::invalid_argument &ex) {
         exceptionMessage1 = ex.what();
     }
-    ASSERT_EQ(exceptionMessage1, SEQUENCE_WRAPPER_WRONG_SYMBOL_MESSAGE);
+    ASSERT_EQ(exceptionMessage1, "SimpleValidator's check of seq is failed on string: \"ACGT\"");
 
     try {
         DNA dna2{s2};

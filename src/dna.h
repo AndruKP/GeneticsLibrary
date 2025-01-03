@@ -10,15 +10,12 @@
 
 class RNA;
 
-class DNA : public SequenceWrapper {
+class DNA : public SequenceWrapper<DNA_VALIDATOR > {
     ReplicationStatus replicationStatus{ReplicationStatus::LEADING};
 
     TranscriptionStatus transcriptionStatus{TranscriptionStatus::TEMPLATE};
 
 public:
-    std::string getAllowedSymbols() override { return CORRECT_DNA_BASES; }
-
-
     explicit DNA(const std::string &seq,
                  Directionality dir = Directionality::DIR_3_to_5,
                  ReplicationStatus repl = ReplicationStatus::LEADING,

@@ -19,6 +19,8 @@ set(SOURCE_FILES
         src/Protein.h
         src/Aminoacid.cpp
         src/Aminoacid.h
+        src/Validators.cpp
+        src/Validators.h
 )
 
 set(TEST_FILES

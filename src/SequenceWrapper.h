@@ -4,16 +4,18 @@
 
 #include "constants.h"
 #include "sequence.h"
+#include "Validators.h"
 
-
+template<typename Validator=TrivialValidator>
 class SequenceWrapper {
 protected:
     Sequence sequence;
     Directionality directionality;
 
 public:
-    virtual std::string getAllowedSymbols() {
-        return "";
+    static std::string validate(const std::string &seq) {
+        Validator::validate(seq);
+        return seq;
     }
 
     SequenceWrapper(const std::string &seq, Directionality dir);
@@ -28,10 +30,6 @@ public:
 
     virtual ~SequenceWrapper();
 
-    bool checkSequenceCorrectness(const std::string &seq);
-
-    bool checkSymbolCorrectness(char c);
-
     [[nodiscard]] Directionality getDirectionality() const { return directionality; }
     [[nodiscard]] std::string getSequence() const { return sequence.getSequence(); }
 
@@ -44,6 +42,63 @@ public:
     void reverse();
 };
 
+template<typename Validator>
+SequenceWrapper<Validator>::~SequenceWrapper() = default;
 
+
+template<typename Validator>
+SequenceWrapper<Validator>::SequenceWrapper(const std::string &seq,
+                                            const Directionality dir): sequence(validate(seq)),
+directionality(dir) {
+}
+
+template<typename Validator>
+SequenceWrapper<Validator>::SequenceWrapper(const SequenceWrapper &other) = default;
+
+template<typename Validator>
+SequenceWrapper<
+    Validator>::SequenceWrapper(SequenceWrapper<Validator> &&other) noexcept: sequence(std::move(other.sequence)),
+                                                                              directionality(other.directionality) {
+}
+
+template<typename Validator>
+SequenceWrapper<Validator> &SequenceWrapper<Validator>::operator=(const SequenceWrapper<Validator> &other) {
+    if (this == &other) {
+        return *this;
+    }
+
+    directionality = other.directionality;
+    sequence = other.sequence;
+
+    return *this;
+}
+
+template<typename Validator>
+SequenceWrapper<Validator> &SequenceWrapper<Validator>::operator=(SequenceWrapper<Validator> &&other) noexcept {
+    if (this == &other) {
+        return *this;
+    }
+
+    directionality = other.directionality;
+    sequence = std::move(other.sequence);
+
+
+    return *this;
+}
+
+template<typename Validator>
+void SequenceWrapper<Validator>::reverseDirectionality() {
+    if (directionality == Directionality::DIR_5_to_3) {
+        directionality = Directionality::DIR_3_to_5;
+    } else {
+        directionality = Directionality::DIR_5_to_3;
+    }
+}
+
+template<typename Validator>
+void SequenceWrapper<Validator>::reverse() {
+    sequence.reverse();
+    reverseDirectionality();
+}
 
 

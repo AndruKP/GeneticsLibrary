@@ -3,12 +3,13 @@
 DNA::DNA(const std::string &seq,
          const Directionality dir,
          const ReplicationStatus repl,
-         const TranscriptionStatus trnscpt): SequenceWrapper(seq, dir) {
+         const TranscriptionStatus trnscpt): SequenceWrapper<DNA_VALIDATOR>(seq, dir) {
 
     //todo fix needs of polymorphic behaviour in constructor (that one silly AllowedSymbols...)
-    if (!checkSequenceCorrectness(seq)) {
-        throw std::invalid_argument(SEQUENCE_WRAPPER_WRONG_SYMBOL_MESSAGE);
-    }
+
+    // if (!checkSequenceCorrectness(seq)) {
+    //     throw std::invalid_argument(SEQUENCE_WRAPPER_WRONG_SYMBOL_MESSAGE);
+    // }
 
     directionality = dir;
     sequence.setSequence(seq);
