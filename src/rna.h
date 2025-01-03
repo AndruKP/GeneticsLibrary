@@ -10,11 +10,13 @@
 
 class DNA;
 
-class RNA : SequenceWrapper<RNA_VALIDATOR > {
+class RNA : public SequenceWrapper<RNA_VALIDATOR > {
 public:
     explicit RNA(const std::string &seq, Directionality dir = Directionality::DIR_3_to_5);
 
-    DNA reverseTranscribe();
+    explicit RNA (const Sequence &seq, Directionality dir = Directionality::DIR_3_to_5);
+
+    [[nodiscard]] DNA reverseTranscribe(TranscriptionStatus strand = TranscriptionStatus::CODING) const;
 
     Protein translate();
 };

@@ -6,6 +6,7 @@
 #include "sequence.h"
 #include "Validators.h"
 
+// todo second refarttcc
 template<typename Validator=TrivialValidator>
 class SequenceWrapper {
 protected:
@@ -13,12 +14,19 @@ protected:
     Directionality directionality;
 
 public:
-    static std::string validate(const std::string &seq) {
+    static std::string validateString(const std::string &seq) {
         Validator::validate(seq);
         return seq;
     }
 
+    static Sequence validateSequence(const Sequence &seq) {
+        Validator::validate(seq.getSequence());
+        return seq;
+    }
+
     SequenceWrapper(const std::string &seq, Directionality dir);
+
+    SequenceWrapper(const Sequence &seq, Directionality dir);
 
     SequenceWrapper(const SequenceWrapper &other);
 
@@ -39,7 +47,7 @@ public:
     /// not actually "reversing string", only changes to opposite directionality member
     void reverseDirectionality();
 
-    void reverse();
+    virtual void reverse();
 };
 
 template<typename Validator>
@@ -48,7 +56,13 @@ SequenceWrapper<Validator>::~SequenceWrapper() = default;
 
 template<typename Validator>
 SequenceWrapper<Validator>::SequenceWrapper(const std::string &seq,
-                                            const Directionality dir): sequence(validate(seq)),
+                                            const Directionality dir): sequence(validateString(seq)),
+                                                                       directionality(dir) {
+}
+
+template<typename Validator>
+SequenceWrapper<Validator>::SequenceWrapper(const Sequence &seq,
+                                            const Directionality dir): sequence(validateSequence(seq)),
                                                                        directionality(dir) {
 }
 

@@ -21,6 +21,11 @@ public:
                  ReplicationStatus repl = ReplicationStatus::LEADING,
                  TranscriptionStatus trnscpt = TranscriptionStatus::TEMPLATE);
 
+    explicit DNA(const Sequence &seq,
+                 Directionality dir = Directionality::DIR_3_to_5,
+                 ReplicationStatus repl = ReplicationStatus::LEADING,
+                 TranscriptionStatus trnscpt = TranscriptionStatus::TEMPLATE);
+
     DNA(const DNA &other);
 
     DNA(DNA &&other) noexcept;
@@ -43,5 +48,11 @@ public:
 
     void reverseComplement();
 
-    [[nodiscard]] RNA transcribe(const RNA &other) const;
+    void reverse() override;
+
+    void reverseReplicationStatus();
+
+    void reverseTranscriptionStatus();
+
+    [[nodiscard]] RNA transcribe() const;
 };

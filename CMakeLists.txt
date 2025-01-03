@@ -27,6 +27,7 @@ set(SOURCE_FILES
 set(TEST_FILES
         tests/testSequence.cpp
         tests/testDNA.cpp
+        tests/testRNA.cpp
 )
 
 set(GTEST_SOURCE_FILES

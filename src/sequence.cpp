@@ -44,7 +44,7 @@ void Sequence::replaceChars(const std::map<char, char> &charsMap) {
     }, repl);
 }
 
-Sequence Sequence::translate(const std::map<char, char> &charsMap) {
+Sequence Sequence::translate(const std::map<char, char> &charsMap) const{
     std::string temp;
     std::ranges::transform(sequence,
                            std::back_inserter(temp),

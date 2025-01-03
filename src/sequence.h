@@ -29,5 +29,5 @@ public:
 
     void replaceChars(const std::map<char, char> &charsMap);
 
-    Sequence translate(const std::map<char, char> &charsMap);
+    [[nodiscard]] Sequence translate(const std::map<char, char> &charsMap) const;
 };

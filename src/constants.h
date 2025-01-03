@@ -31,21 +31,35 @@ const std::map<char, char> RNA_COMPLEMENTS{
     {'G', 'C'}
 };
 
-
-const std::map<char, char> TRANSCRIPTION_TABLE{
+/// Table for transcription DNA (template strand) into RNA
+const std::map<char, char> TRANSCRIPTION_TABLE_FOR_TEMPLATE_STRAND{
     {'T', 'A'},
     {'A', 'U'},
     {'C', 'G'},
     {'G', 'C'}
 };
 
-const std::map<char, char> REVERSE_TRANSCRIPTION_TABLE{
+const std::map<char, char> TRANSCRIPTION_TABLE_FOR_CODING_STRAND{
+    {'A', 'A'},
+    {'T', 'U'},
+    {'C', 'C'},
+    {'G', 'G'}
+};
+
+/// Table for reverse transcription RNA into DNA
+const std::map<char, char> REVERSE_TRANSCRIPTION_TO_TEMPLATE_STRAND{
     {'U', 'A'},
     {'A', 'T'},
     {'C', 'G'},
     {'G', 'C'}
 };
 
+const std::map<char, char> REVERSE_TRANSCRIPTION_TO_CODING_STRAND{
+    {'A', 'A'},
+    {'U', 'T'},
+    {'C', 'C'},
+    {'G', 'G'}
+};
 
 /// Note: there is used only classic start codon "AUG"
 const std::map<std::string, std::string> TRANSLATION_TABLE{

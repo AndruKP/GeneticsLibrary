@@ -167,3 +167,18 @@ TEST(TestDNA, IdempotenceOfComplements) {
     ASSERT_EQ(s1, dna1.getSequence());
     ASSERT_EQ(Directionality::DIR_3_to_5, dna1.getDirectionality());
 }
+
+TEST(TestDNA, TestTranscription) {
+    std::string s1 = "ACACACTTTGGG";
+    DNA dna1(s1, Directionality::DIR_3_to_5, ReplicationStatus::LEADING, TranscriptionStatus::CODING);
+    DNA dna2{s1, Directionality::DIR_3_to_5, ReplicationStatus::LEADING, TranscriptionStatus::TEMPLATE};
+
+    auto rna1 = dna1.transcribe();
+    auto rna2 = dna2.transcribe();
+
+    ASSERT_EQ(rna1.getSequence(),"ACACACUUUGGG");
+    ASSERT_EQ(Directionality::DIR_3_to_5, rna1.getDirectionality());
+
+    ASSERT_EQ(rna2.getSequence(),"UGUGUGAAACCC");
+    ASSERT_EQ(Directionality::DIR_5_to_3, rna2.getDirectionality());
+}
