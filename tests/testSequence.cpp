@@ -95,11 +95,11 @@ TEST(TestSequence, TestReverse) {
 
 TEST(TestSequence, TestReplaceCharacters) {
   std::string stringSeq = "MerryChristmas";
-  const std::map<char,char> charMap{
-    {'r','x'},
-    {'e','a'},
-    {'m','M'},
-    {'s','s'}
+  const std::map<char, char> charMap{
+    {'r', 'x'},
+    {'e', 'a'},
+    {'m', 'M'},
+    {'s', 's'}
   };
   Sequence seq1(stringSeq);
   ASSERT_EQ(stringSeq, seq1.getSequence());
@@ -109,16 +109,55 @@ TEST(TestSequence, TestReplaceCharacters) {
 }
 
 TEST(TestSequence, TestTranslate) {
-  std::string stringSeq = "MerryChristmas";
-  const std::map<char,char> charMap{
-      {'r','x'},
-      {'e','a'},
-      {'m','M'},
-      {'s','s'}
+  const std::string stringSeq = "MerryChristmas";
+  const std::map<char, char> charMap{
+    {'r', 'x'},
+    {'e', 'a'},
+    {'m', 'M'},
+    {'s', 's'}
   };
   Sequence seq1(stringSeq);
   ASSERT_EQ(stringSeq, seq1.getSequence());
 
   auto seq2 = seq1.translate(charMap);
   ASSERT_EQ("MaxxyChxistMas", seq2.getSequence());
+}
+
+TEST(TestSequence, TestLevenshteinDistance) {
+  const std::string s1 = "taller";
+  const std::string s2 = "falling";
+  //dist = 4
+  Sequence seq1(s1);
+  Sequence seq2(s2);
+  ASSERT_EQ(seq1.levenshteinDistance(seq2), 4);
+  ASSERT_EQ(seq2.levenshteinDistance(seq1), 4);
+  ASSERT_EQ(seq1.levenshteinDistance(seq1), 0);
+
+  Sequence seq3("to maintain");
+  Sequence seq4("mountain");
+
+  // 3 additions or insertions : to mountain + 2 substitutions -- to maintain
+
+  ASSERT_EQ(seq3.levenshteinDistance(seq4), 5);
+  ASSERT_EQ(seq4.levenshteinDistance(seq3), 5);
+}
+
+TEST(TestSequence, TestLevDistTime) {
+  std::ostringstream oss1;
+  // algo is NM, so try
+  int N = 10000;
+  for (auto i = 0; i < N; ++i) {
+    oss1 << i;
+  }
+
+  std::ostringstream oss2;
+
+  for (auto i = N - 1; i > 0; --i) {
+    oss2 << i;
+  }
+
+  Sequence seq1(oss1.str());
+  Sequence seq2(oss2.str());
+
+  ASSERT_NE(seq1.levenshteinDistance(seq2), 0);
 }

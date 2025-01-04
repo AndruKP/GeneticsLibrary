@@ -30,4 +30,12 @@ public:
     void replaceChars(const std::map<char, char> &charsMap);
 
     [[nodiscard]] Sequence translate(const std::map<char, char> &charsMap) const;
+
+    [[nodiscard]] size_t levenshteinDistance(const Sequence &other) const;
+
+    [[nodiscard]] size_t damerauLevenshteinDistance(const Sequence &other) const;
+
+    [[nodiscard]] size_t LSCDistance(const Sequence &other) const;
+
+    [[nodiscard]] size_t jaroWinklerDistance(const Sequence &other) const;
 };
