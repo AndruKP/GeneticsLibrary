@@ -6,7 +6,7 @@
 #include "sequence.h"
 #include "Validators.h"
 
-// todo second refarttcc
+// todo second refactor: constructor: SequenceWrapper(..., Validator validator or bool/void (*func) (std::string s));
 template<typename Validator=TrivialValidator>
 class SequenceWrapper {
 protected:

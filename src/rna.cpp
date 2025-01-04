@@ -24,8 +24,22 @@ DNA RNA::reverseTranscribe(const TranscriptionStatus strand) const {
 }
 
 
-Protein RNA::translate() {
-    //todo finish
-    return {};
+Protein RNA::translate() const {
+    Protein protein;
+
+    if (directionality == Directionality::DIR_3_to_5) {
+        const auto shift = getSequence().size() % CODON_LENGTH;
+        for (auto i = getSequence().size() / CODON_LENGTH; i > 0; --i) {
+            auto substr = getSequence().substr((i - 1) * CODON_LENGTH + shift, CODON_LENGTH);
+            std::ranges::reverse(substr);
+            protein.addAminoacid(substr);
+        }
+    } else {
+        for (auto i = 0; i < getSequence().size() / CODON_LENGTH; ++i) {
+            auto substr = getSequence().substr(i * CODON_LENGTH, CODON_LENGTH);
+            protein.addAminoacid(substr);
+        }
+    }
+    return protein;
 }
 

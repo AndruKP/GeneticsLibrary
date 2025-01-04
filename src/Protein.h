@@ -18,6 +18,8 @@ public:
     void addAminoacid(const Aminoacid &aminoacid);
 
     void addAminoacid(const std::string &codon);
+
+    [[nodiscard]] std::string toString() const;
 };
 
 

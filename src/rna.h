@@ -18,5 +18,5 @@ public:
 
     [[nodiscard]] DNA reverseTranscribe(TranscriptionStatus strand = TranscriptionStatus::CODING) const;
 
-    Protein translate();
+    [[nodiscard]] Protein translate() const;
 };

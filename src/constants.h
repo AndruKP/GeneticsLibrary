@@ -61,6 +61,7 @@ const std::map<char, char> REVERSE_TRANSCRIPTION_TO_CODING_STRAND{
     {'G', 'G'}
 };
 
+constexpr int CODON_LENGTH = 3;
 /// Note: there is used only classic start codon "AUG"
 const std::map<std::string, std::string> TRANSLATION_TABLE{
     {"UUU", "Phe"}, {"UUC", "Phe"}, // Phenylalanine

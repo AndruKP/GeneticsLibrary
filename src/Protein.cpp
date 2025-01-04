@@ -1,5 +1,7 @@
 #include "Protein.h"
 
+#include <sstream>
+
 Protein::Protein() = default;
 
 Protein::Protein(std::vector<Aminoacid> chain): chain(std::move(chain)) {
@@ -20,4 +22,14 @@ void Protein::addAminoacid(const Aminoacid &aminoacid) {
 void Protein::addAminoacid(const std::string &codon) {
     const auto aminoacid = Aminoacid(codon);
     addAminoacid(aminoacid);
+}
+
+std::string Protein::toString() const {
+    std::ostringstream oss;
+
+    for (const Aminoacid &aminoacid : chain) {
+        oss << aminoacid;
+    }
+
+    return oss.str();
 }

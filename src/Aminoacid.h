@@ -15,3 +15,4 @@ public:
     [[nodiscard]] std::string getName() const { return name; }
 };
 
+std::ostream &operator<<(std::ostream &os, const Aminoacid &a);

@@ -7,3 +7,8 @@ Aminoacid::Aminoacid(const std::string &codon) {
     name = TRANSLATION_TABLE.at(codon);
 }
 
+std::ostream &operator<<(std::ostream &os, const Aminoacid &a) {
+    os << a.getName();
+    return os;
+}
+
