@@ -15,8 +15,10 @@ protected:
 
 public:
     static std::string validateString(const std::string &seq) {
-        Validator::validate(seq);
-        return seq;
+        std::string temp;
+        std::ranges::transform(seq, std::back_inserter(temp), toupper);
+        Validator::validate(temp);
+        return temp;
     }
 
     static Sequence validateSequence(const Sequence &seq) {
@@ -40,6 +42,7 @@ public:
 
     [[nodiscard]] Directionality getDirectionality() const { return directionality; }
     [[nodiscard]] std::string getSequence() const { return sequence.getSequence(); }
+    [[nodiscard]] size_t size() const { return sequence.size(); }
 
     void setDirectionality(const Directionality dir) { directionality = dir; }
 
@@ -48,6 +51,8 @@ public:
     void reverseDirectionality();
 
     virtual void reverse();
+
+    [[nodiscard]] size_t levenshteinDistance(const SequenceWrapper<Validator> &other) const;
 };
 
 template<typename Validator>
@@ -56,7 +61,7 @@ SequenceWrapper<Validator>::~SequenceWrapper() = default;
 
 template<typename Validator>
 SequenceWrapper<Validator>::SequenceWrapper(const std::string &seq,
-                                            const Directionality dir): sequence(validateString(seq)),
+                                            const Directionality dir): sequence(std::move(validateString(seq))),
                                                                        directionality(dir) {
 }
 
@@ -113,4 +118,9 @@ template<typename Validator>
 void SequenceWrapper<Validator>::reverse() {
     sequence.reverse();
     reverseDirectionality();
+}
+
+template<typename Validator>
+size_t SequenceWrapper<Validator>::levenshteinDistance(const SequenceWrapper<Validator> &other) const {
+    return sequence.levenshteinDistance(other.sequence);
 }

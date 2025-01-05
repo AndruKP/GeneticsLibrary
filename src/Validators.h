@@ -28,9 +28,9 @@ bool SimpleValidator<allowedSymbols>::checkSymbolCorrectness(const char c) {
 
 template<const std::string &allowedSymbols>
 bool SimpleValidator<allowedSymbols>::checkSequenceCorrectness(const std::string &seq) {
-    if (seq.empty()) {
-        return false;
-    }
+    // if (seq.empty()) {
+    //     return false;
+    // }
     return std::ranges::all_of(seq, checkSymbolCorrectness);
 }
 

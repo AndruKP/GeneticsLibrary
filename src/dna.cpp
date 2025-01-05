@@ -1,5 +1,11 @@
 #include "dna.h"
 
+DNA::DNA(): DNA("",
+                Directionality::DIR_3_to_5,
+                ReplicationStatus::LEADING,
+                TranscriptionStatus::CODING) {
+}
+
 DNA::DNA(const std::string &seq,
          const Directionality dir,
          const ReplicationStatus repl,

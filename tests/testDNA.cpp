@@ -20,7 +20,7 @@ TEST(TestDNA, TestTrueConstructors) {
 
     DNA dna1{s1, Directionality::DIR_5_to_3};
     DNA dna2{s2, Directionality::DIR_3_to_5};
-    DNA dna3{s3};
+    DNA dna3{"gtgt"};
 
     ASSERT_EQ(s1, dna1.getSequence());
     ASSERT_EQ(s2, dna2.getSequence());

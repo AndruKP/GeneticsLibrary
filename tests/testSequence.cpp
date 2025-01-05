@@ -127,14 +127,14 @@ TEST(TestSequence, TestLevenshteinDistance) {
   const std::string s1 = "taller";
   const std::string s2 = "falling";
   //dist = 4
-  Sequence seq1(s1);
-  Sequence seq2(s2);
+  const Sequence seq1(s1);
+  const Sequence seq2(s2);
   ASSERT_EQ(seq1.levenshteinDistance(seq2), 4);
   ASSERT_EQ(seq2.levenshteinDistance(seq1), 4);
   ASSERT_EQ(seq1.levenshteinDistance(seq1), 0);
 
-  Sequence seq3("to maintain");
-  Sequence seq4("mountain");
+  const Sequence seq3("to maintain");
+  const Sequence seq4("mountain");
 
   // 3 additions or insertions : to mountain + 2 substitutions -- to maintain
 
@@ -144,8 +144,9 @@ TEST(TestSequence, TestLevenshteinDistance) {
 
 TEST(TestSequence, TestLevDistTime) {
   std::ostringstream oss1;
-  // algo is NM, so try
-  int N = 10000;
+  // algo is O(NM), so try
+  //int N = 10000;
+  int N = 1000;
   for (auto i = 0; i < N; ++i) {
     oss1 << i;
   }

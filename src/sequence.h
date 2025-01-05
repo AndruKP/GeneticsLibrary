@@ -13,6 +13,8 @@ public:
 
     [[nodiscard]] std::string getSequence() const { return sequence; }
 
+    [[nodiscard]] size_t size() const { return sequence.size(); }
+
     void setSequence(std::string newSeq);
 
     Sequence(const Sequence &other);

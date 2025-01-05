@@ -16,6 +16,8 @@ class DNA : public SequenceWrapper<DNA_VALIDATOR > {
     TranscriptionStatus transcriptionStatus{TranscriptionStatus::TEMPLATE};
 
 public:
+    DNA();
+
     explicit DNA(const std::string &seq,
                  Directionality dir = Directionality::DIR_3_to_5,
                  ReplicationStatus repl = ReplicationStatus::LEADING,

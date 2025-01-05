@@ -58,8 +58,8 @@ Sequence Sequence::translate(const std::map<char, char> &charsMap) const {
 }
 
 size_t Sequence::levenshteinDistance(const Sequence &other) const {
-    const std::string seq1 = getSequence();
-    const std::string seq2 = other.getSequence();
+    const auto seq1 = getSequence();
+    const auto seq2 = other.getSequence();
 
     const auto size1 = seq1.size();
     const auto size2 = seq2.size();
@@ -71,22 +71,22 @@ size_t Sequence::levenshteinDistance(const Sequence &other) const {
         return seq1.size();
     }
 
-    std::vector<int> prevRow(size2 + 1);
-    std::vector<int> currRow(size2 + 1);
+    std::vector<size_t> prevRow(size2 + 1);
+    std::vector<size_t> currRow(size2 + 1);
 
     std::iota(prevRow.begin(), prevRow.end(), 0);
 
-    for (auto i = 0; i < size1; ++i) {
+    for (size_t i = 0; i < size1; ++i) {
         currRow[0] = i + 1;
 
-        for (auto j = 0; j < size2; ++j) {
+        for (size_t j = 0; j < size2; ++j) {
             auto deletionCost = prevRow[j + 1] + 1;
             auto insertionCost = currRow[j] + 1;
             auto substitutionCost = prevRow[j];
             if (seq1[i] != seq2[j]) {
                 ++substitutionCost;
             }
-            currRow[j + 1] = std::min(std::min(deletionCost, insertionCost), substitutionCost);
+            currRow[j + 1] = std::min({deletionCost, insertionCost, substitutionCost});
         }
         prevRow = std::move(currRow);
         currRow.reserve(size2 + 1);
