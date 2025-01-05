@@ -1,7 +1,3 @@
-//
-// Created by andru_kfgnofp on 12/14/2024.
-//
-
 #pragma once
 #include <map>
 #include <string>
@@ -16,6 +12,8 @@ public:
     Sequence();
 
     [[nodiscard]] std::string getSequence() const { return sequence; }
+
+    [[nodiscard]] size_t size() const { return sequence.size(); }
 
     void setSequence(std::string newSeq);
 
@@ -32,4 +30,14 @@ public:
     void reverse();
 
     void replaceChars(const std::map<char, char> &charsMap);
+
+    [[nodiscard]] Sequence translate(const std::map<char, char> &charsMap) const;
+
+    [[nodiscard]] size_t levenshteinDistance(const Sequence &other) const;
+
+    [[nodiscard]] size_t damerauLevenshteinDistance(const Sequence &other) const;
+
+    [[nodiscard]] size_t LSCDistance(const Sequence &other) const;
+
+    [[nodiscard]] size_t jaroWinklerDistance(const Sequence &other) const;
 };

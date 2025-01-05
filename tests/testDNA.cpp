@@ -11,21 +11,7 @@
 
 using namespace ::testing;
 
-TEST(TestDNA, TestCheckCorrectness) {
-    ASSERT_TRUE(DNA::checkSymbolCorrectness('A'));
-    ASSERT_TRUE(DNA::checkSymbolCorrectness('C'));
-    ASSERT_TRUE(DNA::checkSymbolCorrectness('G'));
-    ASSERT_TRUE(DNA::checkSymbolCorrectness('T'));
-
-    ASSERT_FALSE(DNA::checkSymbolCorrectness('x'));
-    ASSERT_FALSE(DNA::checkSymbolCorrectness('-'));
-
-    ASSERT_TRUE(DNA::checkSequenceCorrectness("ACGT"));
-    ASSERT_TRUE(DNA::checkSequenceCorrectness("AAAAA"));
-    ASSERT_TRUE(DNA::checkSequenceCorrectness("GTGT"));
-
-    ASSERT_FALSE(DNA::checkSequenceCorrectness("AT&T"));
-}
+//todo rewrite tests to SequenceWrapper, not only DNA
 
 TEST(TestDNA, TestTrueConstructors) {
     std::string s1 = "ACGT";
@@ -34,7 +20,7 @@ TEST(TestDNA, TestTrueConstructors) {
 
     DNA dna1{s1, Directionality::DIR_5_to_3};
     DNA dna2{s2, Directionality::DIR_3_to_5};
-    DNA dna3{s3};
+    DNA dna3{"gtgt"};
 
     ASSERT_EQ(s1, dna1.getSequence());
     ASSERT_EQ(s2, dna2.getSequence());
@@ -58,14 +44,14 @@ TEST(TestDNA, TestFalseConstructors) {
     } catch (std::invalid_argument &ex) {
         exceptionMessage1 = ex.what();
     }
-    ASSERT_EQ(exceptionMessage1, DNA_WRONG_SYMBOL_MESSAGE);
+    ASSERT_EQ(exceptionMessage1, "SimpleValidator's check of seq is failed on string: \"ACGT\"");
 
     try {
         DNA dna2{s2};
     } catch (std::invalid_argument &ex) {
         exceptionMessage2 = ex.what();
     }
-    ASSERT_EQ(exceptionMessage2, DNA_WRONG_SYMBOL_MESSAGE);
+    ASSERT_EQ(exceptionMessage2, SIMPLE_VALIDATOR_WRONG_SEQUENCE_MESSAGE + " \"ACGT\"");
 }
 
 TEST(TestDNA, TestCopyConstructors) {
@@ -180,4 +166,19 @@ TEST(TestDNA, IdempotenceOfComplements) {
 
     ASSERT_EQ(s1, dna1.getSequence());
     ASSERT_EQ(Directionality::DIR_3_to_5, dna1.getDirectionality());
+}
+
+TEST(TestDNA, TestTranscription) {
+    std::string s1 = "ACACACTTTGGG";
+    DNA dna1(s1, Directionality::DIR_3_to_5, ReplicationStatus::LEADING, TranscriptionStatus::CODING);
+    DNA dna2{s1, Directionality::DIR_3_to_5, ReplicationStatus::LEADING, TranscriptionStatus::TEMPLATE};
+
+    auto rna1 = dna1.transcribe();
+    auto rna2 = dna2.transcribe();
+
+    ASSERT_EQ(rna1.getSequence(),"ACACACUUUGGG");
+    ASSERT_EQ(Directionality::DIR_3_to_5, rna1.getDirectionality());
+
+    ASSERT_EQ(rna2.getSequence(),"UGUGUGAAACCC");
+    ASSERT_EQ(Directionality::DIR_5_to_3, rna2.getDirectionality());
 }

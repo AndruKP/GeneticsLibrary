@@ -1,7 +1,3 @@
-//
-// Created by andru_kfgnofp on 12/14/2024.
-//
-
 #pragma once
 
 #include <algorithm>
@@ -10,23 +6,24 @@
 #include "constants.h"
 #include "rna.h"
 #include "sequence.h"
+#include "SequenceWrapper.h"
 
+class RNA;
 
-class DNA {
-    Directionality directionality{Directionality::DIR_3_to_5};
-
+class DNA : public SequenceWrapper<DNA_VALIDATOR > {
     ReplicationStatus replicationStatus{ReplicationStatus::LEADING};
 
     TranscriptionStatus transcriptionStatus{TranscriptionStatus::TEMPLATE};
 
-    Sequence sequence;
-
 public:
-    static bool checkSequenceCorrectness(const std::string &seq);
-
-    static bool checkSymbolCorrectness(char c);
+    DNA();
 
     explicit DNA(const std::string &seq,
+                 Directionality dir = Directionality::DIR_3_to_5,
+                 ReplicationStatus repl = ReplicationStatus::LEADING,
+                 TranscriptionStatus trnscpt = TranscriptionStatus::TEMPLATE);
+
+    explicit DNA(const Sequence &seq,
                  Directionality dir = Directionality::DIR_3_to_5,
                  ReplicationStatus repl = ReplicationStatus::LEADING,
                  TranscriptionStatus trnscpt = TranscriptionStatus::TEMPLATE);
@@ -39,27 +36,25 @@ public:
 
     DNA &operator=(DNA &&other) noexcept;
 
-    ~DNA();
-
-    [[nodiscard]] Directionality getDirectionality() const { return directionality; }
+    ~DNA() override;
 
     [[nodiscard]] ReplicationStatus getReplicationStatus() const { return replicationStatus; }
 
     [[nodiscard]] TranscriptionStatus getTranscriptionStatus() const { return transcriptionStatus; }
 
-    [[nodiscard]] std::string getSequence() const { return sequence.getSequence(); }
-
-    void setDirectionality(const Directionality dir) { directionality = dir; }
-
     void setReplicationStatus(const ReplicationStatus repl) { replicationStatus = repl; }
 
     void setTranscriptionStatus(const TranscriptionStatus trans) { transcriptionStatus = trans; }
 
-    void reverseDirectionality();
-
-    void reverse();
-
     void complement();
 
     void reverseComplement();
+
+    void reverse() override;
+
+    void reverseReplicationStatus();
+
+    void reverseTranscriptionStatus();
+
+    [[nodiscard]] RNA transcribe() const;
 };

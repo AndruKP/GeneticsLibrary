@@ -15,11 +15,22 @@ set(SOURCE_FILES
         src/constants.h
         src/SequenceWrapper.cpp
         src/SequenceWrapper.h
+        src/Protein.cpp
+        src/Protein.h
+        src/Aminoacid.cpp
+        src/Aminoacid.h
+        src/Validators.cpp
+        src/Validators.h
+        src/ErrorsConstants.h
+        src/record.cpp
+        src/record.h
 )
 
 set(TEST_FILES
         tests/testSequence.cpp
         tests/testDNA.cpp
+        tests/testRNA.cpp
+        tests/testRecord.cpp
 )
 
 set(GTEST_SOURCE_FILES
@@ -42,9 +53,14 @@ include_directories(src)
 add_executable(${TARGET_NAME} ${SOURCE_FILES} ${TEST_FILES} ${GTEST_SOURCE_FILES})
 target_link_libraries(${TARGET_NAME} ${CMAKE_THREAD_LIBS_INIT})
 
-#add_custom_command(TARGET exercise9 PRE_BUILD
-#        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/subtitles.srt
-#        ${CMAKE_SOURCE_DIR}/subtitlesWithWrong.srt
-#        ${CMAKE_SOURCE_DIR}/The_Matrix.srt
-#        $<TARGET_FILE_DIR:exercise9>
-#        VERBATIM)
+add_custom_command(TARGET GeneticsLibrary PRE_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_SOURCE_DIR}/data/Cryptosporidium hominis/ncbi_dataset/data/GCA_000006425.2/GCA_000006425.2_ASM642v2_genomic.fna"
+        #        ${CMAKE_SOURCE_DIR}/subtitlesWithWrong.srt
+        #        ${CMAKE_SOURCE_DIR}/The_Matrix.srt
+        $<TARGET_FILE_DIR:GeneticsLibrary>
+        VERBATIM)
+add_custom_command(TARGET GeneticsLibrary PRE_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${CMAKE_SOURCE_DIR}/data/croppedContig"
+        "$<TARGET_FILE_DIR:GeneticsLibrary>/croppedContig"
+        VERBATIM)
