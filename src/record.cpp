@@ -61,9 +61,9 @@ std::istream &operator>>(std::istream &is, Record &record) {
         is >> FASTALine;
     }
 
-    DNA dna(dnaSeq, Directionality::DIR_5_to_3);
-    Record temp(seqID_, description_, std::move(dna));
 
-    record = std::move(temp);
+    record = Record(seqID_,
+                    description_,
+                    DNA(dnaSeq, Directionality::DIR_5_to_3));
     return is;
 }

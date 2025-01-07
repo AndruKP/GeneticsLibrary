@@ -12,29 +12,8 @@
 
 using namespace ::testing;
 
-
-
-TEST(TestRecord, TestTrueConstructors) {
-    std::string s1 = "ACGT";
-    std::string s2 = "AAAA";
-    std::string s3 = "GTGT";
-
-    DNA dna1{s1, Directionality::DIR_5_to_3};
-    DNA dna2{s2, Directionality::DIR_3_to_5};
-    DNA dna3{"gtgt"};
-
-    ASSERT_EQ(s1, dna1.getSequence());
-    ASSERT_EQ(s2, dna2.getSequence());
-    ASSERT_EQ(s3, dna3.getSequence());
-
-    ASSERT_EQ(Directionality::DIR_5_to_3, dna1.getDirectionality());
-    ASSERT_EQ(Directionality::DIR_3_to_5, dna2.getDirectionality());
-    ASSERT_EQ(ReplicationStatus::LEADING, dna1.getReplicationStatus());
-    ASSERT_EQ(TranscriptionStatus::TEMPLATE, dna2.getTranscriptionStatus());
-}
-
 TEST(TestRecord, TestFileExtractor) {
-    std::string fileName = "croppedContig/seq_0.fna";//data/croppedContig/seq_1.fna
+    std::string fileName = "croppedContig/seq_0.fna"; //data/croppedContig/seq_1.fna
     std::ifstream file(fileName);
 
     Record record;

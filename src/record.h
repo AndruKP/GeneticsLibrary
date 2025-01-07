@@ -30,6 +30,10 @@ public:
     [[nodiscard]] size_t size() const { return dna.size(); }
 
     [[nodiscard]] DNA getDNA() const { return dna; }
+
+    [[nodiscard]] std::string getSeqID() const { return seqID; }
+
+    [[nodiscard]] std::string getDescription() const { return description; }
 };
 
 std::istream &operator>>(std::istream &is, Record &record);

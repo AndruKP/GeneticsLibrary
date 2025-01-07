@@ -15,3 +15,8 @@ const std::string RECORD_INVALID_FIRST_CHAR_ERROR_MESSAGE("Invalid starting char
 const std::string SEQ_ID_FAILURE("Failed to parse seqID");
 const std::string DESCRIPTION_FAILURE("Failed to parse description");
 const std::string SEQUENCE_FAILURE("Failed to parse sequence");
+
+const std::string GET_RECORD_ERROR_MESSAGE = "Record index is out of range: idx = ";
+const std::string END_OF_ERROR_MESSAGE_APPEND_SIZE = "while size = ";
+
+const std::string FASTAReader_WARNING = "DNA Validator have failed, probably because of non-standard base in sequence: ";

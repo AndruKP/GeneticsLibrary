@@ -24,6 +24,8 @@ set(SOURCE_FILES
         src/ErrorsConstants.h
         src/record.cpp
         src/record.h
+        src/FASTAReader.cpp
+        src/FASTAReader.h
 )
 
 set(TEST_FILES
@@ -31,6 +33,7 @@ set(TEST_FILES
         tests/testDNA.cpp
         tests/testRNA.cpp
         tests/testRecord.cpp
+        tests/testFASTAReader.cpp
 )
 
 set(GTEST_SOURCE_FILES
