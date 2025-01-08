@@ -140,6 +140,16 @@ TEST(TestSequence, TestLevenshteinDistance) {
 
   ASSERT_EQ(seq3.levenshteinDistance(seq4), 5);
   ASSERT_EQ(seq4.levenshteinDistance(seq3), 5);
+
+  const Sequence seq5("");
+  ASSERT_EQ(seq5.levenshteinDistance(seq4), seq4.size());
+  ASSERT_EQ(seq4.levenshteinDistance(seq5), seq4.size());
+  ASSERT_EQ(seq5.levenshteinDistance(seq5), 0);
+
+  const Sequence seq6("ACGT-AAA");
+  const Sequence seq7("ACGTTACC");
+
+  ASSERT_EQ(seq6.levenshteinDistance(seq7), 3);
 }
 
 TEST(TestSequence, TestLevDistTime) {
@@ -161,4 +171,33 @@ TEST(TestSequence, TestLevDistTime) {
   Sequence seq2(oss2.str());
 
   ASSERT_NE(seq1.levenshteinDistance(seq2), 0);
+}
+
+TEST(TestSequence, TestAligment) {
+  std::string s1 = "AGTACGCA";
+  std::string s2 = "TATGC";
+
+  Sequence seq1(s1);
+  Sequence seq2(s2);
+
+  auto res = seq1.align(seq2);
+  ASSERT_EQ(res.first, seq1.getSequence());
+  ASSERT_EQ(res.second, "--TATGC-");
+
+  auto temp = seq2.align(seq1);
+
+  s1 = "GCATGCG";
+  s2 = "GATTACA";
+
+  auto res1 = Sequence(s1).align(Sequence(s2));
+
+  ASSERT_EQ(res1.first, "GCATG-CG");
+  ASSERT_EQ(res1.second, "G-ATTACA");
+
+  s1 = "AATGCA";
+  s2 = "AAGC";
+
+  auto res2 = Sequence(s1).align(Sequence(s2));
+  ASSERT_EQ(res2.first, "AATGCA");
+  ASSERT_EQ(res2.second, "AA-GC-");
 }

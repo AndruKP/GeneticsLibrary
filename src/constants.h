@@ -90,3 +90,8 @@ const std::map<std::string, std::string> TRANSLATION_TABLE{
     {"AGA", "Arg"}, {"AGG", "Arg"}, // Arginine
     {"GGU", "Gly"}, {"GGC", "Gly"}, {"GGA", "Gly"}, {"GGG", "Gly"} // Glycine
 };
+
+constexpr long long INSERTION_COST = -1;
+constexpr long long DELETION_COST = -1;
+constexpr long long MATCH_COST = 1;
+constexpr long long MISMATCH_COST = -1;
