@@ -15,17 +15,10 @@ using namespace ::testing;
 TEST(TestRecord, TestFileExtractor) {
     std::string fileName = "croppedContig/seq_0.fna"; //data/croppedContig/seq_1.fna
     std::ifstream file(fileName);
-
+    ASSERT_TRUE(file.is_open());
     Record record;
 
-    // std::string debugLine;
-    // file >> debugLine;
-    // file >> debugLine;
-    // file >> debugLine;
-    // file >> debugLine;
-
     file >> record;
-    auto size = record.size();
     file.close();
     // TODO end with some meaningful ASSERT
 }
@@ -35,7 +28,9 @@ TEST(TestRecord, TestComparisonAndFileExtractor) {
     std::string fileName1 = "croppedContig/seq_2.fna";
 
     std::ifstream file0(fileName0);
+    ASSERT_TRUE(file0.is_open());
     std::ifstream file1(fileName1);
+    ASSERT_TRUE(file1.is_open());
 
     Record record0;
     Record record1;
@@ -48,4 +43,30 @@ TEST(TestRecord, TestComparisonAndFileExtractor) {
     DNA dna1 = record1.getDNA();
 
     ASSERT_NE(dna1.getSequence(), dna0.getSequence());
+}
+
+TEST(TestRecord, TestInsertion) {
+    std::string inputFile1 = "croppedContig/seq_0.fna";
+    std::ifstream input1(inputFile1);
+    ASSERT_TRUE(input1.is_open());
+    Record record1;
+    input1 >> record1;
+    input1.close();
+
+    std::string outputFile = "croppedContig/seq_0_written.fna";
+    std::ofstream output(outputFile);
+    ASSERT_TRUE(output.is_open());
+    output << record1;
+    output.close();
+
+
+    std::string inputFile2 = "croppedContig/seq_0_written.fna";
+    std::ifstream input2(inputFile2);
+    ASSERT_TRUE(input2.is_open());
+    Record record2;
+    input2 >> record2;
+
+    ASSERT_EQ(record1.getDNA().getSequence(), record2.getDNA().getSequence());
+    ASSERT_EQ(record1.getSeqID(), record2.getSeqID());
+    ASSERT_EQ(record1.getDescription(), record2.getDescription());
 }

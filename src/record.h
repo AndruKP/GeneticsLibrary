@@ -38,3 +38,4 @@ public:
 
 std::istream &operator>>(std::istream &is, Record &record);
 
+std::ostream &operator<<(std::ostream &os, const Record &record);

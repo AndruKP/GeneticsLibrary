@@ -95,3 +95,5 @@ constexpr long long INSERTION_COST = -1;
 constexpr long long DELETION_COST = -1;
 constexpr long long MATCH_COST = 1;
 constexpr long long MISMATCH_COST = -1;
+
+constexpr size_t FASTA_OUTPUT_LINE_SIZE = 80;

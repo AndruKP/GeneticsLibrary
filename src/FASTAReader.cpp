@@ -3,7 +3,6 @@
 //
 
 #include "FASTAReader.h"
-#include "ErrorsConstants.h"
 
 #include <iostream>
 
@@ -11,7 +10,7 @@ void FASTAReader::addRecord(const Record &record) {
     records.push_back(record);
 }
 
-void FASTAReader::addRecord(const std::string seqID, const std::string description, const std::string sequence) {
+void FASTAReader::addRecord(const std::string &seqID, const std::string &description, const std::string &sequence) {
     try {
         addRecord(Record(seqID,
                          description,
@@ -72,4 +71,11 @@ std::istream &operator>>(std::istream &is, FASTAReader &fastaReader) {
     }
 
     return is;
+}
+
+std::ostream &operator<<(std::ostream &os, const FASTAReader &fastaReader) {
+    for (auto &record: fastaReader.getSequence()) {
+        os << record;
+    }
+    return os;
 }

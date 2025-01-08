@@ -30,6 +30,35 @@ TEST(TestFASTAReader, TestFileExtractor) {
     ASSERT_NE(reader.size(), 0);
 }
 
+TEST(TestFASTAReader, TestFileInsertion) {
+    std::string inputFileName1 = "GCA_000006425.2_ASM642v2_genomic.fna";
+    std::ifstream input1(inputFileName1);
+
+    ASSERT_TRUE(input1.is_open());
+    FASTAReader reader1;
+
+    input1 >> reader1;
+    input1.close();
+
+
+    std::string outputFilename = "GCA_000006425.2_ASM642v2_genomic.fna";
+    std::ofstream output(outputFilename);
+
+    ASSERT_TRUE(output.is_open());
+
+    output << reader1;
+    output.close();
+
+    std::ifstream input2(outputFilename);
+    ASSERT_TRUE(input2.is_open());
+    FASTAReader reader2;
+    input2 >> reader2;
+    input2.close();
+
+    ASSERT_EQ(reader1.size(), reader2.size());
+    ASSERT_EQ(reader1.getRecord(3).getSeqID(), reader2.getRecord(3).getSeqID());
+}
+
 // TEST(TestFASTAReader, TestComparisonAndFileExtractor) {
 //     std::string fileName0 = "croppedContig/seq_0.fna";
 //     std::string fileName1 = "croppedContig/seq_2.fna";

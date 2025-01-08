@@ -18,11 +18,15 @@ public:
 
     void addRecord(const Record &record);
 
-    void addRecord(const std::string seqID, const std::string description, const std::string sequence);
+    void addRecord(const std::string &seqID, const std::string &description, const std::string &sequence);
 
     [[nodiscard]] size_t size() const;
 
     [[nodiscard]] Record getRecord(size_t idx) const;
+
+    [[nodiscard]] const std::vector<Record> &getSequence() const { return records; };
 };
 
 std::istream &operator>>(std::istream &is, FASTAReader &fastaReader);
+
+std::ostream &operator<<(std::ostream &os, const FASTAReader &fastaReader);

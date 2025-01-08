@@ -3,7 +3,6 @@
 //
 
 #include "record.h"
-#include "ErrorsConstants.h"
 
 Record::Record(Record &&other) noexcept: seqID(std::move(other.seqID)),
                                          description(std::move(other.description)),
@@ -66,4 +65,20 @@ std::istream &operator>>(std::istream &is, Record &record) {
                     description_,
                     DNA(dnaSeq, Directionality::DIR_5_to_3));
     return is;
+}
+
+std::ostream &operator<<(std::ostream &os, const Record &record) {
+    os << '>' << record.getSeqID() << ' ' << record.getDescription() << '\n';
+    const std::string dna = record.getDNA().getSequence();
+
+    // todo in case of switching to C++23 change to:
+    // auto chunks = dna | std::views::chunk(FASTA_OUTPUT_LINE_SIZE);
+    // for_each(chunks, [](){...});
+
+    // todo consider changing to foreach
+    for (size_t i = 0; i < dna.size(); i += FASTA_OUTPUT_LINE_SIZE) {
+        os << dna.substr(i, FASTA_OUTPUT_LINE_SIZE) << '\n';
+    }
+
+    return os;
 }
