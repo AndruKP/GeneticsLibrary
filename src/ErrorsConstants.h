@@ -20,3 +20,5 @@ const std::string GET_RECORD_ERROR_MESSAGE = "Record index is out of range: idx 
 const std::string END_OF_ERROR_MESSAGE_APPEND_SIZE = "while size = ";
 
 const std::string FASTAReader_WARNING = "DNA Validator have failed, probably because of non-standard base in sequence: ";
+
+const std::string WRONG_CODON_ERROR_MESSAGE = "Codon does not exist";

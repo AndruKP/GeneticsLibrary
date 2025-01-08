@@ -10,7 +10,6 @@
 
 #include "FASTAReader.h"
 #include "gtest/gtest.h"
-#include "record.h"
 
 using namespace ::testing;
 

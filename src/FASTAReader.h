@@ -4,7 +4,7 @@
 #pragma once
 #include <vector>
 
-#include "record.h"
+#include "Record.h"
 
 
 class FASTAReader {

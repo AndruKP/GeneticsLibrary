@@ -2,7 +2,7 @@
 // Created by andru_kfgnofp on 1/5/2025.
 //
 
-#include "record.h"
+#include "Record.h"
 
 Record::Record(Record &&other) noexcept: seqID(std::move(other.seqID)),
                                          description(std::move(other.description)),

@@ -2,7 +2,7 @@
 
 Aminoacid::Aminoacid(const std::string &codon) {
     if (!TRANSLATION_TABLE.contains(codon)) {
-        throw std::invalid_argument("Codon does not exist");
+        throw std::invalid_argument(WRONG_CODON_ERROR_MESSAGE);
     }
     name = TRANSLATION_TABLE.at(codon);
 }

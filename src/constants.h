@@ -11,7 +11,9 @@ enum class TranscriptionStatus { TEMPLATE, CODING };
 
 
 /// adenine (A), cytosine (C), guanine (G), thymine (T)
+///
 /// NOTE: currently there are no specific bases like aminoadenine (Z)
+/// and no FASTA "combinations" like N (which states for aNy base)
 const inline std::string CORRECT_DNA_BASES = {'A', 'C', 'G', 'T'};
 constexpr int NUM_OF_CORRECT_DNA_BASES = 4;
 const std::map<char, char> DNA_COMPLEMENTS{

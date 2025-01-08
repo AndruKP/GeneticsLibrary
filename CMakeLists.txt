@@ -34,6 +34,7 @@ set(TEST_FILES
         tests/testRNA.cpp
         tests/testRecord.cpp
         tests/testFASTAReader.cpp
+        tests/testAminoacid.cpp
 )
 
 set(GTEST_SOURCE_FILES

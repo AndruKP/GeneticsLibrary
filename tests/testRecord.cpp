@@ -8,7 +8,7 @@
 #include <fstream>
 #include <iostream>
 #include "gtest/gtest.h"
-#include "record.h"
+#include "Record.h"
 
 using namespace ::testing;
 
