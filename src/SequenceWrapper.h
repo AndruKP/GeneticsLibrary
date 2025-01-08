@@ -46,13 +46,18 @@ public:
 
     void setDirectionality(const Directionality dir) { directionality = dir; }
 
-
     /// not actually "reversing string", only changes to opposite directionality member
     void reverseDirectionality();
 
     virtual void reverse();
 
     [[nodiscard]] size_t levenshteinDistance(const SequenceWrapper<Validator> &other) const;
+
+    [[nodiscard]] std::pair<std::string, std::string> align(const SequenceWrapper<Validator> &other) const;
+
+    [[nodiscard]] std::pair<std::string, std::string> alignReversed(const SequenceWrapper<Validator> &other) const;
+
+    // todo calc best alignment (like min_dist(align, alignReversed), for dna also complement and reversed complement)
 };
 
 template<typename Validator>
@@ -124,3 +129,16 @@ template<typename Validator>
 size_t SequenceWrapper<Validator>::levenshteinDistance(const SequenceWrapper<Validator> &other) const {
     return sequence.levenshteinDistance(other.sequence);
 }
+
+template<typename Validator>
+std::pair<std::string, std::string> SequenceWrapper<Validator>::align(const SequenceWrapper<Validator> &other) const {
+    return sequence.align(other.sequence);
+}
+
+template<typename Validator>
+std::pair<std::string, std::string> SequenceWrapper<Validator>::alignReversed(
+    const SequenceWrapper<Validator> &other) const {
+    return sequence.alignReversed(other.sequence);
+}
+
+

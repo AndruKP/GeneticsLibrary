@@ -86,9 +86,11 @@ std::pair<std::string, std::string> Sequence::_align(const std::string &seq1, co
     std::ranges::reverse_copy(seq1, std::back_inserter(revSeq1));
     std::ranges::reverse_copy(seq2, std::back_inserter(revSeq2));
 
-    const auto scoreLeft = alignScoreRow(seq1.substr(0, mid), seq2, insertionCost, deletionCost, matchCost, mismatchCost);
-    const auto scoreRight = alignScoreRow(revSeq1.substr(0, size1 - mid), revSeq2, insertionCost, deletionCost, matchCost,
-                                    mismatchCost);
+    const auto scoreLeft = alignScoreRow(seq1.substr(0, mid), seq2, insertionCost, deletionCost, matchCost,
+                                         mismatchCost);
+    const auto scoreRight = alignScoreRow(revSeq1.substr(0, size1 - mid), revSeq2, insertionCost, deletionCost,
+                                          matchCost,
+                                          mismatchCost);
 
     // todo use some algo instead (std::max_element)...
     size_t splitIndex = 0;
@@ -222,6 +224,16 @@ std::pair<std::string, std::string> Sequence::align(const Sequence &other,
                                                     const long long matchCost,
                                                     const long long mismatchCost) const {
     return _align(getSequence(), other.getSequence(), insertionCost, deletionCost, matchCost, mismatchCost);
+}
+
+std::pair<std::string, std::string> Sequence::alignReversed(const Sequence &other,
+                                                            const long long insertionCost,
+                                                            const long long deletionCost,
+                                                            const long long matchCost,
+                                                            const long long mismatchCost) const {
+    std::string temp = other.getSequence();
+    std::ranges::reverse(temp);
+    return _align(getSequence(), temp, insertionCost, deletionCost, matchCost, mismatchCost);
 }
 
 std::vector<long long> Sequence::alignScoreRow(const std::string &sequence1, const std::string &sequence2,

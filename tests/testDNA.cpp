@@ -213,3 +213,30 @@ TEST(TestDNA, TestTranscription) {
     ASSERT_EQ(rna2.getSequence(), "UGUGUGAAACCC");
     ASSERT_EQ(Directionality::DIR_5_to_3, rna2.getDirectionality());
 }
+
+TEST(TestDNA, TestLevenshteinDistance) {
+    std::string s1, s2;
+    s1 = "ACGTACC";
+    s2 = "ACGACCTT";
+
+    ASSERT_EQ(3, DNA(s1).levenshteinDistance(DNA(s2)));
+}
+
+TEST(TestDNA, TestAlignment) {
+    std::string s1 = "GCATGCG";
+    std::string s2 = "GATTACA";
+
+    auto res = DNA(s1).align(DNA(s2));
+    ASSERT_EQ(res.first, "GCATG-CG");
+    ASSERT_EQ(res.second, "G-ATTACA");
+}
+
+TEST(TestDNA, TestAlignmentReversed) {
+    std::string s1 = "GCATGCG";
+    std::string s2 = "ACATTAG";
+
+    auto res = DNA(s1).alignReversed(DNA(s2));
+    ASSERT_EQ(res.first, "GCATG-CG");
+    ASSERT_EQ(res.second, "G-ATTACA");
+}
+

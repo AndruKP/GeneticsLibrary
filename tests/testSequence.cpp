@@ -201,3 +201,16 @@ TEST(TestSequence, TestAligment) {
   ASSERT_EQ(res2.first, "AATGCA");
   ASSERT_EQ(res2.second, "AA-GC-");
 }
+
+TEST(TestSequence, TestAligmnentReversed) {
+  std::string s1, s2;
+  s1 = "GCATGCG";
+  // s2 = "GATTACA";
+  // std::ranges::reverse(s2);
+  s2 = "ACATTAG";
+
+  auto res1 = Sequence(s1).alignReversed(Sequence(s2));
+
+  ASSERT_EQ(res1.first, "GCATG-CG");
+  ASSERT_EQ(res1.second, "G-ATTACA");
+}

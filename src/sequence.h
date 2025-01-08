@@ -8,10 +8,10 @@ class Sequence {
     std::string sequence;
 
     [[nodiscard]] std::pair<std::string, std::string> baseCaseSolver(const std::string &seq1, const std::string &seq2,
-                                                       long long insertionCost, long long deletionCost,
-                                                       long long matchCost,
-                                                       long long mismatchCost,
-                                                       size_t size2) const;
+                                                                     long long insertionCost, long long deletionCost,
+                                                                     long long matchCost,
+                                                                     long long mismatchCost,
+                                                                     size_t size2) const;
 
     [[nodiscard]] std::pair<std::string, std::string> _align(const std::string &seq1, const std::string &seq2,
                                                              const long long insertionCost,
@@ -67,6 +67,12 @@ public:
                                                             const long long deletionCost = DELETION_COST,
                                                             const long long matchCost = MATCH_COST,
                                                             const long long mismatchCost = MISMATCH_COST) const;
+
+    [[nodiscard]] std::pair<std::string, std::string> alignReversed(const Sequence &other,
+                                                                    const long long insertionCost = INSERTION_COST,
+                                                                    const long long deletionCost = DELETION_COST,
+                                                                    const long long matchCost = MATCH_COST,
+                                                                    const long long mismatchCost = MISMATCH_COST) const;
 
     /**
      *
