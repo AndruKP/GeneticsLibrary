@@ -26,9 +26,9 @@ public:
         return seq;
     }
 
-    SequenceWrapper(const std::string &seq, Directionality dir);
+    explicit SequenceWrapper(const std::string &seq, Directionality dir = DEFAULT_DIRECT_STATUS);
 
-    SequenceWrapper(const Sequence &seq, Directionality dir);
+    explicit SequenceWrapper(const Sequence &seq, Directionality dir = DEFAULT_DIRECT_STATUS);
 
     SequenceWrapper(const SequenceWrapper &other);
 

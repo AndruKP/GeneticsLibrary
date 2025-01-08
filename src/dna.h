@@ -11,22 +11,22 @@
 class RNA;
 
 class DNA : public SequenceWrapper<DNA_VALIDATOR > {
-    ReplicationStatus replicationStatus{ReplicationStatus::LEADING};
+    ReplicationStatus replicationStatus{DEFAULT_REPL_STATUS};
 
-    TranscriptionStatus transcriptionStatus{TranscriptionStatus::TEMPLATE};
+    TranscriptionStatus transcriptionStatus{DEFAULT_TRNSCPT_STATUS};
 
 public:
     DNA();
 
     explicit DNA(const std::string &seq,
-                 Directionality dir = Directionality::DIR_3_to_5,
-                 ReplicationStatus repl = ReplicationStatus::LEADING,
-                 TranscriptionStatus trnscpt = TranscriptionStatus::TEMPLATE);
+                 Directionality dir = DEFAULT_DIRECT_STATUS,
+                 ReplicationStatus repl = DEFAULT_REPL_STATUS,
+                 TranscriptionStatus trnscpt = DEFAULT_TRNSCPT_STATUS);
 
     explicit DNA(const Sequence &seq,
-                 Directionality dir = Directionality::DIR_3_to_5,
-                 ReplicationStatus repl = ReplicationStatus::LEADING,
-                 TranscriptionStatus trnscpt = TranscriptionStatus::TEMPLATE);
+                 Directionality dir = DEFAULT_DIRECT_STATUS,
+                 ReplicationStatus repl = DEFAULT_REPL_STATUS,
+                 TranscriptionStatus trnscpt = DEFAULT_TRNSCPT_STATUS);
 
     DNA(const DNA &other);
 

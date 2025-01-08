@@ -9,6 +9,10 @@ enum class ReplicationStatus { LEADING, LAGGING };
 
 enum class TranscriptionStatus { TEMPLATE, CODING };
 
+constexpr auto DEFAULT_DIRECT_STATUS = Directionality::DIR_3_to_5;
+constexpr auto DEFAULT_REPL_STATUS=  ReplicationStatus::LEADING;
+constexpr auto DEFAULT_TRNSCPT_STATUS = TranscriptionStatus::TEMPLATE;
+
 
 /// adenine (A), cytosine (C), guanine (G), thymine (T)
 ///
