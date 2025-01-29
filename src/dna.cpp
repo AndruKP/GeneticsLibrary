@@ -76,6 +76,51 @@ void DNA::reverseTranscriptionStatus() {
     }
 }
 
+/**
+ * @note aligning complement of other in the same directionality as this
+ * @param other
+ * @return
+ */
+std::pair<std::string, std::string> DNA::alignComplement(const DNA &other) const {
+    auto temp = other;
+    temp.complement();
+    temp.reverse();
+    return align(temp);
+}
+
+std::pair<std::string, std::string> DNA::alignComplementReversedDir(const DNA &other) const {
+    auto temp = other;
+    temp.complement();
+    return alignReversedDir(temp);
+}
+
+std::pair<std::string, std::string> DNA::bestAlignment(const DNA &other) const {
+    auto bestAlignmentResult = align(other);
+    size_t min = Sequence(bestAlignmentResult.first).levenshteinDistance(Sequence(bestAlignmentResult.second));
+
+    auto tempAlignmentResult = alignReversedDir(other);
+    auto tempDist = Sequence(tempAlignmentResult.first).levenshteinDistance(Sequence(tempAlignmentResult.second));
+    if (tempDist < min) {
+        bestAlignmentResult = tempAlignmentResult;
+        min = tempDist;
+    }
+
+    tempAlignmentResult = alignComplement(other);
+    tempDist = Sequence(tempAlignmentResult.first).levenshteinDistance(Sequence(tempAlignmentResult.second));
+    if (tempDist < min) {
+        bestAlignmentResult = tempAlignmentResult;
+        min = tempDist;
+    }
+
+    tempAlignmentResult = alignComplementReversedDir(other);
+    tempDist = Sequence(tempAlignmentResult.first).levenshteinDistance(Sequence(tempAlignmentResult.second));
+    if (tempDist < min) {
+        bestAlignmentResult = tempAlignmentResult;
+        min = tempDist;
+    }
+    return bestAlignmentResult;
+}
+
 RNA DNA::transcribe() const {
     //todo Directionality change to bool
 
@@ -94,5 +139,3 @@ RNA DNA::transcribe() const {
     const Sequence temp = sequence.translate(transcriptionTable);
     return RNA(temp, RNA_Directionality);
 }
-
-

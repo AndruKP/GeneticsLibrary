@@ -8,7 +8,6 @@ Aminoacid::Aminoacid(const std::string &codon) {
 }
 
 std::ostream &operator<<(std::ostream &os, const Aminoacid &a) {
-    os << a.getName();
-    return os;
+    return os << a.getName();
 }
 

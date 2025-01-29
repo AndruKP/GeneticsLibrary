@@ -229,14 +229,72 @@ TEST(TestDNA, TestAlignment) {
     auto res = DNA(s1).align(DNA(s2));
     ASSERT_EQ(res.first, "GCATG-CG");
     ASSERT_EQ(res.second, "G-ATTACA");
+
+    std::ranges::reverse(s2);
+    res = DNA(s1).align(DNA(s2, Directionality::DIR_5_to_3));
+    ASSERT_EQ(res.first, "GCATG-CG");
+    ASSERT_EQ(res.second, "G-ATTACA");
 }
 
 TEST(TestDNA, TestAlignmentReversed) {
     std::string s1 = "GCATGCG";
     std::string s2 = "ACATTAG";
 
-    auto res = DNA(s1).alignReversed(DNA(s2));
+    auto res = DNA(s1).alignReversedDir(DNA(s2));
+    ASSERT_EQ(res.first, "GCATG-CG");
+    ASSERT_EQ(res.second, "G-ATTACA");
+
+    std::ranges::reverse(s2);
+    res = DNA(s1).alignReversedDir(DNA(s2, Directionality::DIR_5_to_3));
     ASSERT_EQ(res.first, "GCATG-CG");
     ASSERT_EQ(res.second, "G-ATTACA");
 }
 
+TEST(TestDNA, TestAlignmentComplement) {
+    std::string s1 = "GCATGCG";
+    std::string s2 = "CTAATGT";
+
+    auto res = DNA(s1).alignComplement(DNA(s2, Directionality::DIR_5_to_3));
+
+    ASSERT_EQ(res.first, "GCATG-CG");
+    ASSERT_EQ(res.second, "G-ATTACA");
+
+    std::ranges::reverse(s2);
+    res = DNA(s1).alignComplement(DNA(s2, Directionality::DIR_3_to_5));
+
+    ASSERT_EQ(res.first, "GCATG-CG");
+    ASSERT_EQ(res.second, "G-ATTACA");
+}
+
+TEST(TestDNA, TestAligmentReversedComplement) {
+    std::string s1 = "GCATGCG";
+    std::string s2 = "CTAATGT";
+
+    auto res = DNA(s1).alignComplementReversedDir(DNA(s2));
+
+    ASSERT_EQ(res.first, "GCATG-CG");
+    ASSERT_EQ(res.second, "G-ATTACA");
+
+    std::ranges::reverse(s2);
+    res = DNA(s1).alignComplementReversedDir(DNA(s2, Directionality::DIR_5_to_3));
+
+    ASSERT_EQ(res.first, "GCATG-CG");
+    ASSERT_EQ(res.second, "G-ATTACA");
+}
+
+TEST(TestDNA, TestBestAligment) {
+    std::string s1 = "GCATGCG";
+    std::string s2 = "GATTACA";
+
+    auto res = DNA(s1).bestAlignment(DNA(s2));
+    ASSERT_EQ(res.first,  "GCATGCG");
+    ASSERT_EQ(res.second, "ACATTAG");
+
+    s1 = "AAAAACCCCGGGGA";
+    s2 = "ATTTTTGGGGCCCC";
+
+    res = DNA(s1).bestAlignment(DNA(s2));
+
+    ASSERT_EQ(res.first,  "-AAAAACCCCGGGGA");
+    ASSERT_EQ(res.second, "TAAAAACCCCGGGG-");
+}

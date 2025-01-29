@@ -56,5 +56,11 @@ public:
 
     void reverseTranscriptionStatus();
 
+    [[nodiscard]] std::pair<std::string, std::string> alignComplement(const DNA &other) const;
+
+    [[nodiscard]] std::pair<std::string, std::string> alignComplementReversedDir(const DNA &other) const;
+
+    [[nodiscard]] std::pair<std::string, std::string> bestAlignment(const DNA &other) const;
+
     [[nodiscard]] RNA transcribe() const;
 };

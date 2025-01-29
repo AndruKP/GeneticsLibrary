@@ -16,7 +16,7 @@ constexpr auto DEFAULT_TRNSCPT_STATUS = TranscriptionStatus::TEMPLATE;
 
 /// adenine (A), cytosine (C), guanine (G), thymine (T)
 ///
-/// NOTE: currently there are no specific bases like aminoadenine (Z)
+/// @note: currently there are no specific bases like aminoadenine (Z)
 /// and no FASTA "combinations" like N (which states for aNy base)
 const inline std::string CORRECT_DNA_BASES = {'A', 'C', 'G', 'T'};
 constexpr int NUM_OF_CORRECT_DNA_BASES = 4;

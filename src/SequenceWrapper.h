@@ -53,11 +53,28 @@ public:
 
     [[nodiscard]] size_t levenshteinDistance(const SequenceWrapper<Validator> &other) const;
 
+    /**
+    * @note Enforces directionality of other to equal directionality of this.
+    * @param other SequenceWrapper instance
+    * @return pair of aligned strings
+    **/
     [[nodiscard]] std::pair<std::string, std::string> align(const SequenceWrapper<Validator> &other) const;
 
-    [[nodiscard]] std::pair<std::string, std::string> alignReversed(const SequenceWrapper<Validator> &other) const;
+    /**
+     * @note Enforces directionality of other to differ from directionality of this.
+     * @param other SequenceWrapper instance
+     * @return pair of aligned strings
+     */
+    [[nodiscard]] std::pair<std::string, std::string> alignReversedDir(const SequenceWrapper<Validator> &other) const;
 
-    // todo calc best alignment (like min_dist(align, alignReversed), for dna also complement and reversed complement)
+    // todo calc best alignment (like min_dist(align, alignReversedDir), for dna also complement and reversed complement)
+    // todo in future: return signal, which result is the best (smth like pair<pair<string,string>, Signal>)
+    /**
+     * @note takes best (by Lev.Dist) result
+     * @param other
+     * @return
+     */
+    [[nodiscard]] std::pair<std::string, std::string> bestAlignment(const SequenceWrapper<Validator> &other) const;
 };
 
 template<typename Validator>
@@ -132,13 +149,31 @@ size_t SequenceWrapper<Validator>::levenshteinDistance(const SequenceWrapper<Val
 
 template<typename Validator>
 std::pair<std::string, std::string> SequenceWrapper<Validator>::align(const SequenceWrapper<Validator> &other) const {
+    if (directionality != other.getDirectionality()) {
+        return sequence.alignReversed(other.sequence);
+    }
     return sequence.align(other.sequence);
 }
 
 template<typename Validator>
-std::pair<std::string, std::string> SequenceWrapper<Validator>::alignReversed(
+std::pair<std::string, std::string> SequenceWrapper<Validator>::alignReversedDir(
     const SequenceWrapper<Validator> &other) const {
-    return sequence.alignReversed(other.sequence);
+    if (directionality == other.getDirectionality()) {
+        return sequence.alignReversed(other.sequence);
+    }
+    return sequence.align(other.sequence);
 }
 
+template<typename Validator>
+std::pair<std::string, std::string> SequenceWrapper<Validator>::bestAlignment(
+    const SequenceWrapper<Validator> &other) const {
+    auto bestAlignmentResult = align(other);
+    size_t min = Sequence(bestAlignmentResult.first).levenshteinDistance(Sequence(bestAlignmentResult.second));
 
+    auto tempAlignmentResult = alignReversedDir(other);
+    auto tempDist = Sequence(tempAlignmentResult.first).levenshteinDistance(Sequence(tempAlignmentResult.second));
+    if (tempDist < min) {
+        bestAlignmentResult = tempAlignmentResult;
+    }
+    return bestAlignmentResult;
+}
