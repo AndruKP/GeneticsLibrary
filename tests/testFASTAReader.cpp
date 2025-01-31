@@ -13,6 +13,45 @@
 
 using namespace ::testing;
 
+TEST(TestFASTAReader, TestConstructorsAndIndices) {
+    std::vector<Record> records;
+    records.push_back(Record("0", "descr", DNA("ACGT")));
+    records.push_back(Record("1", "descr", DNA("ACGT")));
+
+    FASTAReader reader(records);
+    ASSERT_EQ(reader.size(), 2);
+    ASSERT_EQ(reader.getRecord(0).getSeqID(), "0");
+
+    ASSERT_EQ(reader.getRecord(1).getSeqID(), "1");
+}
+
+TEST(TestFASTAReader, TestIndexError) {
+    std::vector<Record> records;
+    records.push_back(Record("0", "descr", DNA("ACGT")));
+    records.push_back(Record("1", "descr", DNA("ACGT")));
+
+    FASTAReader reader(records);
+    ASSERT_EQ(reader.size(), 2);
+    ASSERT_EQ(reader.getRecord(0).getSeqID(), "0");
+
+    try {
+        auto x = reader.getRecord(2);
+    } catch (FASTAReaderIndexException &e) {
+        ASSERT_EQ(std::string(e.what()), "Record index is out of range: idx = 2 while size = 2");
+    }
+}
+
+TEST(TestFASTAReader, TestAddRecord) {
+    FASTAReader reader;
+    reader.addRecord(Record("0", "descr", DNA("ACGT")));
+    ASSERT_EQ(reader.size(), 1);
+    ASSERT_EQ(reader.getRecord(0).getSeqID(), "0");
+
+    reader.addRecord("1", "1", "ACGT");
+    ASSERT_EQ(reader.size(), 2);
+    ASSERT_EQ(reader.getRecord(1).getSeqID(), "1");
+    ASSERT_EQ(reader.getRecord(1).getDNA().getSequence(), "ACGT");
+}
 
 TEST(TestFASTAReader, TestFileExtractor) {
     std::string fileName = "GCA_000006425.2_ASM642v2_genomic.fna";

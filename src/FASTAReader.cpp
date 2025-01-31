@@ -28,14 +28,9 @@ size_t FASTAReader::size() const {
 
 Record FASTAReader::getRecord(const size_t idx) const {
     try {
-        return records[idx];
-    } catch (std::out_of_range &e) {
-        const auto message = GET_RECORD_ERROR_MESSAGE
-                             + std::to_string(idx)
-                             + END_OF_ERROR_MESSAGE_APPEND_SIZE
-                             + std::to_string(size());
-
-        throw std::out_of_range(message);
+        return records.at(idx);
+    } catch (std::out_of_range &) {
+        throw FASTAReaderIndexException(idx, size());
     }
 }
 
