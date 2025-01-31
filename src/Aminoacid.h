@@ -5,7 +5,8 @@
 
 
 /**
- * Class for representing one aminoacid 
+ * Class for representing one aminoacid
+ * @note Amino-acid's codes are defined in \file constants.h
  */
 class Aminoacid {
     std::string name;
@@ -19,13 +20,17 @@ public:
 
     ~Aminoacid() = default;
 
+    /**
+     * @return 3-letter code of aminoacid defined in TRANSLATION_TABLE
+     */
     [[nodiscard]] std::string getName() const { return name; }
 };
 
 /**
- * Writes name of Aminoacid to stream
+ * Writes name of Aminoacid to output stream
  * @param os output stream
  * @param a Aminoacid
  * @return output stream
  */
 std::ostream &operator<<(std::ostream &os, const Aminoacid &a);
+

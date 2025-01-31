@@ -12,6 +12,75 @@
 
 using namespace ::testing;
 
+TEST(TestRecord, TestConstructors) {
+    auto x = DNA("ACGT");
+
+    Record r1;
+    Record r2("1", "descr", x);
+
+    ASSERT_EQ(r1.getDescription(), "");
+    ASSERT_EQ(r2.getDescription(), "descr");
+
+    ASSERT_EQ(r1.getSeqID(), "");
+    ASSERT_EQ(r2.getSeqID(), "1");
+
+    ASSERT_EQ(r2.getDNA().getSequence(), x.getSequence());
+}
+
+
+TEST(TestRecord, TestCopyConstructor) {
+    DNA dna("AGCT");
+    Record original("1", "description", dna);
+
+    Record copyConstructed(original);
+
+    ASSERT_EQ(copyConstructed.getSeqID(), original.getSeqID());
+    ASSERT_EQ(copyConstructed.getDescription(), original.getDescription());
+    ASSERT_EQ(copyConstructed.getDNA().getSequence(), original.getDNA().getSequence());
+}
+
+TEST(TestRecord, TestCopyOperator) {
+    DNA dna("AGCT");
+    Record original("2", "description", dna);
+
+    Record copyAssigned;
+    copyAssigned = original;
+
+    ASSERT_EQ(copyAssigned.getSeqID(), original.getSeqID());
+    ASSERT_EQ(copyAssigned.getDescription(), original.getDescription());
+    ASSERT_EQ(copyAssigned.getDNA().getSequence(), original.getDNA().getSequence());
+}
+
+TEST(TestRecord, TestMoveConstructor) {
+    Record tempForMove("3", "description", DNA("TTAG"));
+    Record moveConstructed(std::move(tempForMove));
+
+    ASSERT_EQ(moveConstructed.getSeqID(), "3");
+    ASSERT_EQ(moveConstructed.getDescription(), "description");
+    ASSERT_EQ(moveConstructed.getDNA().getSequence(), "TTAG");
+
+    ASSERT_TRUE(tempForMove.getSeqID().empty());
+    ASSERT_TRUE(tempForMove.getDescription().empty());
+    ASSERT_TRUE(tempForMove.getDNA().getSequence().empty());
+}
+
+TEST(TestRecord, TestMoveOperator) {
+    Record temp("4", "description", DNA("GGCC"));
+    Record moveAssigned;
+
+    moveAssigned = Record("1", "1", DNA());
+    moveAssigned = std::move(temp);
+
+    ASSERT_EQ(moveAssigned.getSeqID(), "4");
+    ASSERT_EQ(moveAssigned.getDescription(), "description");
+    ASSERT_EQ(moveAssigned.getDNA().getSequence(), "GGCC");
+
+    ASSERT_TRUE(temp.getSeqID().empty());
+    ASSERT_TRUE(temp.getDescription().empty());
+    ASSERT_TRUE(temp.getDNA().getSequence().empty());
+}
+
+
 TEST(TestRecord, TestFileExtractor) {
     std::string fileName = "croppedContig/seq_0.fna"; //data/croppedContig/seq_1.fna
     std::ifstream file(fileName);
@@ -20,7 +89,8 @@ TEST(TestRecord, TestFileExtractor) {
 
     file >> record;
     file.close();
-    // TODO end with some meaningful ASSERT
+
+    ASSERT_EQ(record.getSeqID(), "LQXE01000001.1");
 }
 
 TEST(TestRecord, TestComparisonAndFileExtractor) {

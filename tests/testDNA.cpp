@@ -48,7 +48,7 @@ TEST(TestDNA, TestFalseConstructors) {
     ASSERT_EQ(exceptionMessage1, "SimpleValidator's check of seq is failed on string: \"ACGT\"");
 }
 
-TEST(TestDNA, TestCopyConstructors) {
+TEST(TestDNA, TestCopyConstructor) {
     std::string s1 = "ACGT";
     DNA dna1{s1, Directionality::DIR_5_to_3};
     ASSERT_EQ(s1, dna1.getSequence());
@@ -57,7 +57,7 @@ TEST(TestDNA, TestCopyConstructors) {
     ASSERT_EQ(s1, dna3.getSequence());
 }
 
-TEST(TestDNA, TestCopyOperators) {
+TEST(TestDNA, TestCopyOperator) {
     std::string s1 = "ACGT";
     std::string s2 = "AAAA";
 
@@ -74,7 +74,7 @@ TEST(TestDNA, TestCopyOperators) {
     ASSERT_EQ(s2, dna2.getSequence());
 }
 
-TEST(TestDNA, TestMoveConstructors) {
+TEST(TestDNA, TestMoveConstructor) {
     std::string s1 = "ACGT";
 
     DNA dna1{s1, Directionality::DIR_5_to_3};
@@ -87,7 +87,7 @@ TEST(TestDNA, TestMoveConstructors) {
     ASSERT_TRUE(dna1.getSequence().empty());
 }
 
-TEST(TestDNA, TestMoveOperators) {
+TEST(TestDNA, TestMoveOperator) {
     std::string s1 = "ACGT";
     std::string s2 = "AAAA";
 
