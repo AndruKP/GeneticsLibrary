@@ -122,8 +122,6 @@ Sequence::Sequence(std::string sequence): sequence(std::move(sequence)) {
 Sequence::Sequence(): Sequence("") {
 }
 
-[[maybe_unused]] void Sequence::setSequence(std::string newSeq) { sequence = std::move(newSeq); }
-
 Sequence::Sequence(const Sequence &other) = default;
 
 Sequence::Sequence(Sequence &&other) noexcept: sequence(std::move(other.sequence)) {
@@ -206,17 +204,6 @@ size_t Sequence::levenshteinDistance(const Sequence &other) const {
     return WagnerFisher<size_t>(seq1, seq2, 1, 1, 0, 1, true)[size2];
 }
 
-size_t Sequence::damerauLevenshteinDistance(const Sequence &other) const {
-    return getSequence().size() + other.getSequence().size();
-}
-
-size_t Sequence::LSCDistance(const Sequence &other) const {
-    return getSequence().size() + other.getSequence().size();
-}
-
-size_t Sequence::jaroWinklerDistance(const Sequence &other) const {
-    return getSequence().size() + other.getSequence().size();
-}
 
 std::pair<std::string, std::string> Sequence::align(const Sequence &other,
                                                     const long long insertionCost,
@@ -252,13 +239,6 @@ std::vector<T> Sequence::WagnerFisher(const std::string &sequence1,
     const auto size1 = sequence1.size();
     const auto size2 = sequence2.size();
 
-    // if (sequence1.empty()) {
-    //     return sequence2.size();
-    // }
-    // if (sequence2.empty()) {
-    //     return sequence1.size();
-    // }
-
     std::vector<T> prevRow(size2 + 1);
     std::vector<T> currRow(size2 + 1);
 
@@ -289,9 +269,7 @@ std::vector<T> Sequence::WagnerFisher(const std::string &sequence1,
                 currRow[j + 1] = std::max({deletionCost, insertionCost, substitutionCost});
             }
         }
-        // todo swap
-        // prevRow = std::move(currRow);
-        // currRow.reserve(size2 + 1);
+
         std::swap(prevRow, currRow);
     }
 

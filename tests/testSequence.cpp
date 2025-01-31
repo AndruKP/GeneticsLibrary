@@ -17,22 +17,6 @@ TEST(TestSequence, TestClassicConstructors) {
   ASSERT_EQ("", emptySeq.getSequence());
 }
 
-/// todo consider deletion
-TEST(TestSequence, SetSequence) {
-  const std::string stringSeq = "ACTG";
-  Sequence seq(stringSeq);
-  ASSERT_EQ(stringSeq, seq.getSequence());
-  const std::string stringSeq2 = "AAAA";
-
-  seq.setSequence(stringSeq2);
-  ASSERT_EQ(stringSeq2, seq.getSequence());
-
-  seq.setSequence(stringSeq2);
-  ASSERT_EQ(stringSeq2, seq.getSequence());
-
-  seq.setSequence("");
-  ASSERT_EQ("", seq.getSequence());
-}
 
 TEST(TestSequence, TestCopyConstructor) {
   std::string stringSeq = "ACTG";
