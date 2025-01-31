@@ -36,6 +36,7 @@ set(TEST_FILES
         tests/testFASTAReader.cpp
         tests/testAminoacid.cpp
         tests/testProtein.cpp
+        tests/testValidators.cpp
 )
 
 set(GTEST_SOURCE_FILES

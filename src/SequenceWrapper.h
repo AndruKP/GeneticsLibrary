@@ -1,13 +1,26 @@
 #pragma once
 #include <algorithm>
 #include <stdexcept>
+#include <concepts>
 
 #include "constants.h"
 #include "sequence.h"
 #include "Validators.h"
 
+/// Class T needs to have static method T::validate(const::std string &seq) to be Validator
+/// @note because T::validate() is void, T::validate() should throw exceptions by itself
+template <typename T>
+concept HasValidate = requires(const std::string &seq) {
+    { T::validate(seq) } -> std::same_as<void>;
+};
+
 // todo second refactor: constructor: SequenceWrapper(..., Validator validator or bool/void (*func) (std::string s));
-template<typename Validator=TrivialValidator>
+/**
+ * Wraps class Sequence to do architectural part of the job
+ * Takes
+ * @tparam Validator
+ */
+template<HasValidate Validator=TrivialValidator>
 class SequenceWrapper {
 protected:
     Sequence sequence;
@@ -46,7 +59,8 @@ public:
 
     void setDirectionality(const Directionality dir) { directionality = dir; }
 
-    /// not actually "reversing string", only changes to opposite directionality member
+    /// Reverses directionality,
+    /// but not actually "reversing string", only changes to opposite the directionality member
     void reverseDirectionality();
 
     virtual void reverse();
@@ -77,32 +91,32 @@ public:
     [[nodiscard]] std::pair<std::string, std::string> bestAlignment(const SequenceWrapper<Validator> &other) const;
 };
 
-template<typename Validator>
+template<HasValidate Validator>
 SequenceWrapper<Validator>::~SequenceWrapper() = default;
 
 
-template<typename Validator>
+template<HasValidate Validator>
 SequenceWrapper<Validator>::SequenceWrapper(const std::string &seq,
                                             const Directionality dir): sequence(std::move(validateString(seq))),
                                                                        directionality(dir) {
 }
 
-template<typename Validator>
+template<HasValidate Validator>
 SequenceWrapper<Validator>::SequenceWrapper(const Sequence &seq,
                                             const Directionality dir): sequence(validateSequence(seq)),
                                                                        directionality(dir) {
 }
 
-template<typename Validator>
+template<HasValidate Validator>
 SequenceWrapper<Validator>::SequenceWrapper(const SequenceWrapper &other) = default;
 
-template<typename Validator>
+template<HasValidate Validator>
 SequenceWrapper<
     Validator>::SequenceWrapper(SequenceWrapper<Validator> &&other) noexcept: sequence(std::move(other.sequence)),
                                                                               directionality(other.directionality) {
 }
 
-template<typename Validator>
+template<HasValidate Validator>
 SequenceWrapper<Validator> &SequenceWrapper<Validator>::operator=(const SequenceWrapper<Validator> &other) {
     if (this == &other) {
         return *this;
@@ -114,7 +128,7 @@ SequenceWrapper<Validator> &SequenceWrapper<Validator>::operator=(const Sequence
     return *this;
 }
 
-template<typename Validator>
+template<HasValidate Validator>
 SequenceWrapper<Validator> &SequenceWrapper<Validator>::operator=(SequenceWrapper<Validator> &&other) noexcept {
     if (this == &other) {
         return *this;
@@ -127,7 +141,7 @@ SequenceWrapper<Validator> &SequenceWrapper<Validator>::operator=(SequenceWrappe
     return *this;
 }
 
-template<typename Validator>
+template<HasValidate Validator>
 void SequenceWrapper<Validator>::reverseDirectionality() {
     if (directionality == Directionality::DIR_5_to_3) {
         directionality = Directionality::DIR_3_to_5;
@@ -136,18 +150,18 @@ void SequenceWrapper<Validator>::reverseDirectionality() {
     }
 }
 
-template<typename Validator>
+template<HasValidate Validator>
 void SequenceWrapper<Validator>::reverse() {
     sequence.reverse();
     reverseDirectionality();
 }
 
-template<typename Validator>
+template<HasValidate Validator>
 size_t SequenceWrapper<Validator>::levenshteinDistance(const SequenceWrapper<Validator> &other) const {
     return sequence.levenshteinDistance(other.sequence);
 }
 
-template<typename Validator>
+template<HasValidate Validator>
 std::pair<std::string, std::string> SequenceWrapper<Validator>::align(const SequenceWrapper<Validator> &other) const {
     if (directionality != other.getDirectionality()) {
         return sequence.alignReversed(other.sequence);
@@ -155,7 +169,7 @@ std::pair<std::string, std::string> SequenceWrapper<Validator>::align(const Sequ
     return sequence.align(other.sequence);
 }
 
-template<typename Validator>
+template<HasValidate Validator>
 std::pair<std::string, std::string> SequenceWrapper<Validator>::alignReversedDir(
     const SequenceWrapper<Validator> &other) const {
     if (directionality == other.getDirectionality()) {
@@ -164,7 +178,7 @@ std::pair<std::string, std::string> SequenceWrapper<Validator>::alignReversedDir
     return sequence.align(other.sequence);
 }
 
-template<typename Validator>
+template<HasValidate Validator>
 std::pair<std::string, std::string> SequenceWrapper<Validator>::bestAlignment(
     const SequenceWrapper<Validator> &other) const {
     auto bestAlignmentResult = align(other);
