@@ -157,7 +157,7 @@ TEST(TestSequence, TestLevDistTime) {
   ASSERT_NE(seq1.levenshteinDistance(seq2), 0);
 }
 
-TEST(TestSequence, TestAligment) {
+TEST(TestSequence, TestAlignment) {
   std::string s1 = "AGTACGCA";
   std::string s2 = "TATGC";
 
@@ -167,8 +167,6 @@ TEST(TestSequence, TestAligment) {
   auto res = seq1.align(seq2);
   ASSERT_EQ(res.first, seq1.getSequence());
   ASSERT_EQ(res.second, "--TATGC-");
-
-  auto temp = seq2.align(seq1);
 
   s1 = "GCATGCG";
   s2 = "GATTACA";
@@ -186,7 +184,7 @@ TEST(TestSequence, TestAligment) {
   ASSERT_EQ(res2.second, "AA-GC-");
 }
 
-TEST(TestSequence, TestAligmnentReversed) {
+TEST(TestSequence, TestAlignmentReversed) {
   std::string s1, s2;
   s1 = "GCATGCG";
   // s2 = "GATTACA";

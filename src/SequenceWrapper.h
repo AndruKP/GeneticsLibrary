@@ -1,18 +1,10 @@
 #pragma once
 #include <algorithm>
 #include <stdexcept>
-#include <concepts>
 
 #include "constants.h"
 #include "sequence.h"
 #include "Validators.h"
-
-/// Class T needs to have static method T::validate(const::std string &seq) to be Validator
-/// @note because T::validate() is void, T::validate() should throw exceptions by itself
-template <typename T>
-concept HasValidate = requires(const std::string &seq) {
-    { T::validate(seq) } -> std::same_as<void>;
-};
 
 // todo second refactor: constructor: SequenceWrapper(..., Validator validator or bool/void (*func) (std::string s));
 /**
@@ -26,7 +18,6 @@ protected:
     Sequence sequence;
     Directionality directionality;
 
-public:
     static std::string validateString(const std::string &seq) {
         std::string temp;
         std::ranges::transform(seq, std::back_inserter(temp), toupper);
@@ -35,20 +26,48 @@ public:
     }
 
     static Sequence validateSequence(const Sequence &seq) {
-        Validator::validate(seq.getSequence());
-        return seq;
+        return Sequence(std::move(validateString(seq.getSequence())));
     }
 
+public:
+    /**
+     *
+     * @param seq
+     * @param dir
+     */
     explicit SequenceWrapper(const std::string &seq, Directionality dir = DEFAULT_DIRECT_STATUS);
 
+    /**
+     *
+     * @param seq
+     * @param dir
+     */
     explicit SequenceWrapper(const Sequence &seq, Directionality dir = DEFAULT_DIRECT_STATUS);
 
+    /**
+     *
+     * @param other
+     */
     SequenceWrapper(const SequenceWrapper &other);
 
+    /**
+     *
+     * @param other
+     */
     SequenceWrapper(SequenceWrapper &&other) noexcept;
 
+    /**
+     *
+     * @param other
+     * @return
+     */
     SequenceWrapper &operator=(const SequenceWrapper &other);
 
+    /**
+     *
+     * @param other
+     * @return
+     */
     SequenceWrapper &operator=(SequenceWrapper &&other) noexcept;
 
     virtual ~SequenceWrapper();
@@ -57,12 +76,19 @@ public:
     [[nodiscard]] std::string getSequence() const { return sequence.getSequence(); }
     [[nodiscard]] size_t size() const { return sequence.size(); }
 
+    /**
+     *
+     * @param dir
+     */
     void setDirectionality(const Directionality dir) { directionality = dir; }
 
     /// Reverses directionality,
     /// but not actually "reversing string", only changes to opposite the directionality member
     void reverseDirectionality();
 
+    /**
+     *
+     */
     virtual void reverse();
 
     [[nodiscard]] size_t levenshteinDistance(const SequenceWrapper<Validator> &other) const;
@@ -81,7 +107,6 @@ public:
      */
     [[nodiscard]] std::pair<std::string, std::string> alignReversedDir(const SequenceWrapper<Validator> &other) const;
 
-    // todo calc best alignment (like min_dist(align, alignReversedDir), for dna also complement and reversed complement)
     // todo in future: return signal, which result is the best (smth like pair<pair<string,string>, Signal>)
     /**
      * @note takes best (by Lev.Dist) result

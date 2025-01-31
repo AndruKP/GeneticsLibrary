@@ -37,6 +37,7 @@ set(TEST_FILES
         tests/testAminoacid.cpp
         tests/testProtein.cpp
         tests/testValidators.cpp
+        tests/testSequenceWrapper.cpp
 )
 
 set(GTEST_SOURCE_FILES

@@ -5,8 +5,19 @@
 #include <sstream>
 #include <stdexcept>
 #include <bits/ranges_algo.h>
+#include <concepts>
+
 
 #include "constants.h"
+
+/// Class T needs to have static method T::validate(const::std string &seq) to be Validator
+/// @note because T::validate() is void, T::validate() should throw exceptions by itself
+template<typename T>
+concept HasValidate = requires(const std::string &seq)
+{
+    { T::validate(seq) } -> std::same_as<void>;
+};
+
 
 template<const std::string &allowedSymbols>
 class SimpleValidator {
@@ -17,6 +28,10 @@ class SimpleValidator {
     static std::string getErrorMessage();
 
 public:
+    /**
+     *
+     * @param seq
+     */
     static void validate(const std::string &seq);
 };
 
@@ -51,6 +66,10 @@ void SimpleValidator<allowedSymbols>::validate(const std::string &seq) {
 
 class TrivialValidator {
 public:
+    /**
+     *
+     * @param seq
+     */
     static void validate(const std::string &seq) {
     }
 };

@@ -103,7 +103,7 @@ TEST(TestDNA, TestMoveOperator) {
     ASSERT_EQ(s2, dna1.getSequence());
 }
 
-TEST(TestDNA, TestGettersSetters) {
+TEST(TestDNA, TestStatusGettersSetters) {
     DNA dna1{"ACGT", Directionality::DIR_5_to_3};
 
     ASSERT_EQ(Directionality::DIR_5_to_3, dna1.getDirectionality());
